@@ -48,7 +48,7 @@ dependencies {
     } else {
         compile 'com.github.reportportal:commons-model:ede437e'
         compile('com.github.reportportal:commons-dao:773cb2a')
-        compile('com.github.reportportal:commons-rules:spb2')
+        compile('com.github.reportportal:commons-rules:9be7152')
     }
     compile 'org.pf4j:pf4j:2.4.0'
 
