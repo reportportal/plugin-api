@@ -13,25 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.epam.reportportal.extension.bugtracking;
+package com.epam.reportportal.extension.common;
 
-
-import java.util.Collection;
-import java.util.Map;
-import java.util.function.Predicate;
+import com.epam.reportportal.extension.bugtracking.BtsExtension;
 
 /**
- * Some common {@link org.apache.commons.collections.Predicate}
+ * Enumeration with all available extension points
  *
  * @author Andrei Varabyeu
  */
-public final class CommonPredicates {
+public enum ExtensionPoint {
+	BTS(BtsExtension.class);
 
-    private CommonPredicates() {
-        //static only
-    }
+	private Class<? extends org.pf4j.ExtensionPoint> extensionClass;
 
-    public static final Predicate<Collection<?>> IS_EMPTY = input -> null == input || input.isEmpty();
+	ExtensionPoint(Class<? extends org.pf4j.ExtensionPoint> extension) {
+		this.extensionClass = extension;
+	}
 
-    public static final Predicate<Map<?, ?>> IS_MAP_EMPTY = input -> null == input || input.isEmpty();
+	public Class<? extends org.pf4j.ExtensionPoint> getExtensionClass() {
+		return extensionClass;
+	}
 }
