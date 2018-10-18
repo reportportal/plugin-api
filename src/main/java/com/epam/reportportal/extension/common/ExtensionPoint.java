@@ -17,6 +17,9 @@ package com.epam.reportportal.extension.common;
 
 import com.epam.reportportal.extension.bugtracking.BtsExtension;
 
+import java.util.Arrays;
+import java.util.Optional;
+
 /**
  * Enumeration with all available extension points
  *
@@ -33,5 +36,9 @@ public enum ExtensionPoint {
 
 	public Class<? extends org.pf4j.ExtensionPoint> getExtensionClass() {
 		return extensionClass;
+	}
+
+	public static Optional<ExtensionPoint> findByExtension(Class<?> clazz) {
+		return Arrays.stream(values()).filter(it -> it.extensionClass.equals(clazz)).findAny();
 	}
 }
