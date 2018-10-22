@@ -15,10 +15,10 @@
  */
 package com.epam.reportportal.extension.bugtracking;
 
-import com.epam.ta.reportportal.BinaryData;
 import com.epam.ta.reportportal.entity.log.Log;
 import com.google.common.collect.Multimap;
 
+import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
@@ -82,10 +82,10 @@ public class InternalTicket {
 
 	public static class LogEntry {
 		private Log log;
-		private BinaryData attachment;
+		private InputStream attachment;
 		private boolean isIncludeLogs;
 
-		public LogEntry(Log log, BinaryData attachment, boolean includeLogs) {
+		public LogEntry(Log log, InputStream attachment, boolean includeLogs) {
 			this.log = log;
 			this.attachment = attachment;
 			this.isIncludeLogs = includeLogs;
@@ -95,7 +95,7 @@ public class InternalTicket {
 			return log;
 		}
 
-		public BinaryData getAttachment() {
+		public InputStream getAttachment() {
 			return attachment;
 		}
 

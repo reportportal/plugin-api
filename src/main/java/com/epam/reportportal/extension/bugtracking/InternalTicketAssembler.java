@@ -15,7 +15,6 @@
  */
 package com.epam.reportportal.extension.bugtracking;
 
-import com.epam.ta.reportportal.BinaryData;
 import com.epam.ta.reportportal.binary.DataStoreService;
 import com.epam.ta.reportportal.dao.LogRepository;
 import com.epam.ta.reportportal.dao.TestItemRepository;
@@ -28,6 +27,7 @@ import com.google.common.collect.Multimap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
@@ -67,7 +67,7 @@ public class InternalTicketAssembler implements Function<PostTicketRQ, InternalT
 			);
 			List<InternalTicket.LogEntry> entries = new ArrayList<>(logs.size());
 			for (Log log : logs) {
-				BinaryData attachment = null;
+				InputStream attachment = null;
 				/* Get screenshots if required and they are present */
 				if (null != log.getAttachment() && input.getIsIncludeScreenshots()) {
 					attachment = dataStorage.load(log.getAttachment());
