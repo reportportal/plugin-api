@@ -11,6 +11,7 @@ import java.util.Optional;
 public enum BtsConstants {
 	PROJECT("project"),
 	URL("url"),
+	OAUTH_ACCESS_KEY("oauthAccessKey"),
 	TYPE("btsType"),
 	DEFECT_FORM_FIELDS("defectFormFields");
 
