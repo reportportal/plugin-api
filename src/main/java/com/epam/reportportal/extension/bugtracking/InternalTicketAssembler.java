@@ -40,14 +40,18 @@ import java.util.function.Function;
 @Service
 public class InternalTicketAssembler implements Function<PostTicketRQ, InternalTicket> {
 
-	@Autowired
 	private LogRepository logRepository;
 
-	@Autowired
 	private TestItemRepository itemRepository;
 
-	@Autowired
 	private DataStoreService dataStorage;
+
+	@Autowired
+	public InternalTicketAssembler(LogRepository logRepository, TestItemRepository itemRepository, DataStoreService dataStorage) {
+		this.logRepository = logRepository;
+		this.itemRepository = itemRepository;
+		this.dataStorage = dataStorage;
+	}
 
 	@Override
 	public InternalTicket apply(PostTicketRQ input) {
