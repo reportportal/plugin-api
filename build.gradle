@@ -51,7 +51,8 @@ dependencies {
         compile('com.github.reportportal:commons-rules:9be7152')
     }
     compile 'org.pf4j:pf4j:2.4.0'
-
+    compile group: 'com.rallydev.rest', name: 'rally-rest-api', version: '2.2.1'
+    
     testCompile 'junit:junit'
 
 }
