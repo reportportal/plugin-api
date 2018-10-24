@@ -46,12 +46,13 @@ dependencies {
         compile 'com.epam.reportportal:commons-rules:4.2.0'
         compile 'com.epam.reportportal:commons-dao:4.2.0'
     } else {
-        compile 'com.github.reportportal:commons-model:aa3f069'
-        compile('com.github.reportportal:commons-dao:e0bc2b5')
+        compile 'com.github.reportportal:commons-dao:636dba3'
+        compile 'com.github.reportportal:commons-model:7ffbf4e'
         compile('com.github.reportportal:commons-rules:9be7152')
     }
     compile 'org.pf4j:pf4j:2.4.0'
 
     testCompile 'junit:junit'
+    testCompile 'org.springframework:spring-test'
 
 }
