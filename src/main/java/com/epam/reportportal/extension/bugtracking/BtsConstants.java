@@ -13,7 +13,10 @@ public enum BtsConstants {
 	URL("url"),
 	OAUTH_ACCESS_KEY("oauthAccessKey"),
 	TYPE("btsType"),
-	DEFECT_FORM_FIELDS("defectFormFields");
+	DEFECT_FORM_FIELDS("defectFormFields"),
+	USER_NAME("username"),
+	PASSWORD("password"),
+	AUTH_TYPE("authType");
 
 	private final String name;
 
