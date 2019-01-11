@@ -39,6 +39,6 @@ public enum ExtensionPoint {
 	}
 
 	public static Optional<ExtensionPoint> findByExtension(Class<?> clazz) {
-		return Arrays.stream(values()).filter(it -> it.extensionClass.equals(clazz)).findAny();
+		return Arrays.stream(values()).filter(it -> it.extensionClass.isAssignableFrom(clazz)).findAny();
 	}
 }
