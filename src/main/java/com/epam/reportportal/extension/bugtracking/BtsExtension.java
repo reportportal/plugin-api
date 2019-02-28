@@ -37,7 +37,7 @@ public interface BtsExtension extends ExtensionPoint {
 	 * @param system - external system details
 	 * @return TRUE if connection is successful. Otherwise FALSE or throws an exception if no such external system is present
 	 */
-	boolean connectionTest(Integration system);
+	boolean testConnection(Integration system);
 
 	/**
 	 * Get ticket by ID
