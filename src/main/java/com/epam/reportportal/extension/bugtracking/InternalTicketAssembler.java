@@ -19,18 +19,20 @@ import com.epam.ta.reportportal.binary.DataStoreService;
 import com.epam.ta.reportportal.dao.LogRepository;
 import com.epam.ta.reportportal.dao.TestItemRepository;
 import com.epam.ta.reportportal.entity.log.Log;
-import com.epam.ta.reportportal.ws.model.externalsystem.PostFormField;
 import com.epam.ta.reportportal.ws.model.externalsystem.PostTicketRQ;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.Multimap;
+import org.apache.commons.collections.MapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
+import java.util.stream.Collectors;
+
+import static java.util.Optional.ofNullable;
 
 /**
  * Converts REST model into internal domain model representation
@@ -57,37 +59,32 @@ public class InternalTicketAssembler implements Function<PostTicketRQ, InternalT
 	public InternalTicket apply(PostTicketRQ input) {
 		InternalTicket ticket = new InternalTicket();
 
-		if (null != input.getFields()) {
+		ofNullable(input.getFields()).ifPresent(fields -> {
 			Multimap<String, String> fieldsMultimap = LinkedListMultimap.create();
-			for (PostFormField field : input.getFields()) {
-				fieldsMultimap.putAll(field.getId(), field.getValue());
-			}
+			fields.forEach(f -> fieldsMultimap.putAll(f.getId(), f.getValue()));
 			ticket.setFields(fieldsMultimap);
-		}
+		});
 
 		if (input.getIsIncludeLogs() || input.getIsIncludeScreenshots()) {
 			List<Log> logs = logRepository.findByTestItemId(input.getTestItemId(),
 					0 == input.getNumberOfLogs() ? Integer.MAX_VALUE : input.getNumberOfLogs()
 			);
-			List<InternalTicket.LogEntry> entries = new ArrayList<>(logs.size());
-			for (Log log : logs) {
+
+			ticket.setLogs(logs.stream().map(l -> {
 				InputStream attachment = null;
 				/* Get screenshots if required and they are present */
-				if (null != log.getAttachment() && input.getIsIncludeScreenshots()) {
-					attachment = dataStorage.load(log.getAttachment());
+				if (null != l.getAttachment() && input.getIsIncludeScreenshots()) {
+					attachment = dataStorage.load(l.getAttachment().getFileId());
 				}
 				/* Forwarding enabled logs boolean if screens only required */
-				entries.add(new InternalTicket.LogEntry(log, attachment, input.getIsIncludeLogs()));
-			}
-			ticket.setLogs(entries);
+				return new InternalTicket.LogEntry(l, attachment, input.getIsIncludeLogs());
+			}).collect(Collectors.toList()));
 		}
 
 		if (input.getIsIncludeComments()) {
-			itemRepository.findById(input.getTestItemId()).ifPresent(item -> {
-				if (null != item.getItemResults().getIssue().getIssueDescription()) {
-					ticket.setComments(item.getItemResults().getIssue().getIssueDescription());
-				}
-			});
+			itemRepository.findById(input.getTestItemId())
+					.ifPresent(item -> ofNullable(item.getItemResults()
+							.getIssue()).ifPresent(issue -> ofNullable(issue.getIssueDescription()).ifPresent(ticket::setComments)));
 
 		}
 
