@@ -23,11 +23,9 @@ import com.epam.ta.reportportal.ws.model.externalsystem.PostTicketRQ;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.Multimap;
-import org.apache.commons.collections.MapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.InputStream;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -71,13 +69,13 @@ public class InternalTicketAssembler implements Function<PostTicketRQ, InternalT
 			);
 
 			ticket.setLogs(logs.stream().map(l -> {
-				InputStream attachment = null;
+				boolean hasAttachment = false;
 				/* Get screenshots if required and they are present */
 				if (null != l.getAttachment() && input.getIsIncludeScreenshots()) {
-					attachment = dataStorage.load(l.getAttachment().getFileId());
+					hasAttachment = ofNullable(dataStorage.load(l.getAttachment().getFileId())).isPresent();
 				}
 				/* Forwarding enabled logs boolean if screens only required */
-				return new InternalTicket.LogEntry(l, attachment, input.getIsIncludeLogs());
+				return new InternalTicket.LogEntry(l, hasAttachment, input.getIsIncludeLogs());
 			}).collect(Collectors.toList()));
 		}
 
