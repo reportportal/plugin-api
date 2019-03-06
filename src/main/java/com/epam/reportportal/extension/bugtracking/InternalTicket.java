@@ -152,6 +152,19 @@ public class InternalTicket {
 			public boolean isImage() {
 				return isImage;
 			}
+
+			@Override
+			public String toString() {
+				return "LogAttachment{" + "fileId='" + fileId + '\'' + ", contentType='" + contentType + '\'' + ", isImage=" + isImage
+						+ '}';
+			}
+		}
+
+		@Override
+		public String toString() {
+			return "LogEntry{" + "logId=" + logId + ", message='" + message + '\'' + ", logAttachment=" + logAttachment
+					+ ", decodedFileName='" + decodedFileName + '\'' + ", hasAttachment=" + hasAttachment + ", isIncludeLogs="
+					+ isIncludeLogs + '}';
 		}
 	}
 }
