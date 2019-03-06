@@ -82,7 +82,8 @@ public class InternalTicket {
 	public static class LogEntry {
 		private Long logId;
 		private String message;
-		private Attachment attachment;
+		private LogAttachment logAttachment;
+		private String decodedFileName;
 		private boolean hasAttachment;
 		private boolean isIncludeLogs;
 
@@ -92,52 +93,57 @@ public class InternalTicket {
 			this.isIncludeLogs = includeLogs;
 		}
 
-		public LogEntry(Long logId, String message, Attachment attachment, boolean hasAttachment, boolean isIncludeLogs) {
+		public LogEntry(Long logId, String message, Attachment attachment, String decodedFileName, boolean hasAttachment,
+				boolean isIncludeLogs) {
 			this.logId = logId;
 			this.message = message;
-			this.attachment = attachment;
+			this.decodedFileName = decodedFileName;
 			this.hasAttachment = hasAttachment;
 			this.isIncludeLogs = isIncludeLogs;
+			this.logAttachment = new LogAttachment(attachment.getFileId(), attachment.getContentType());
 		}
 
 		public Long getLogId() {
 			return logId;
 		}
 
-		public void setLogId(Long logId) {
-			this.logId = logId;
-		}
-
 		public String getMessage() {
 			return message;
 		}
 
-		public void setMessage(String message) {
-			this.message = message;
+		public LogAttachment getLogAttachment() {
+			return logAttachment;
 		}
 
-		public Attachment getAttachment() {
-			return attachment;
-		}
-
-		public void setAttachment(Attachment attachment) {
-			this.attachment = attachment;
+		public String getDecodedFileName() {
+			return decodedFileName;
 		}
 
 		public boolean isHasAttachment() {
 			return hasAttachment;
 		}
 
-		public void setHasAttachment(boolean hasAttachment) {
-			this.hasAttachment = hasAttachment;
-		}
-
 		public boolean isIncludeLogs() {
 			return isIncludeLogs;
 		}
 
-		public void setIncludeLogs(boolean includeLogs) {
-			isIncludeLogs = includeLogs;
+		private final class LogAttachment {
+
+			private final String fileId;
+			private final String contentType;
+
+			public LogAttachment(String fileId, String contentType) {
+				this.fileId = fileId;
+				this.contentType = contentType;
+			}
+
+			public String getFileId() {
+				return fileId;
+			}
+
+			public String getContentType() {
+				return contentType;
+			}
 		}
 	}
 }

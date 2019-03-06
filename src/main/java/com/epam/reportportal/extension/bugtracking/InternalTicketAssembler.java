@@ -15,10 +15,12 @@
  */
 package com.epam.reportportal.extension.bugtracking;
 
+import com.epam.reportportal.extension.util.FileNameExtractor;
 import com.epam.ta.reportportal.binary.DataStoreService;
 import com.epam.ta.reportportal.dao.LogRepository;
 import com.epam.ta.reportportal.dao.TestItemRepository;
 import com.epam.ta.reportportal.entity.log.Log;
+import com.epam.ta.reportportal.filesystem.DataEncoder;
 import com.epam.ta.reportportal.ws.model.externalsystem.PostTicketRQ;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.LinkedListMultimap;
@@ -46,11 +48,15 @@ public class InternalTicketAssembler implements Function<PostTicketRQ, InternalT
 
 	private final DataStoreService dataStorage;
 
+	private final DataEncoder dataEncoder;
+
 	@Autowired
-	public InternalTicketAssembler(LogRepository logRepository, TestItemRepository itemRepository, DataStoreService dataStorage) {
+	public InternalTicketAssembler(LogRepository logRepository, TestItemRepository itemRepository, DataStoreService dataStorage,
+			DataEncoder dataEncoder) {
 		this.logRepository = logRepository;
 		this.itemRepository = itemRepository;
 		this.dataStorage = dataStorage;
+		this.dataEncoder = dataEncoder;
 	}
 
 	@Override
@@ -72,7 +78,13 @@ public class InternalTicketAssembler implements Function<PostTicketRQ, InternalT
 				/* Get screenshots if required and they are present */
 				if (null != l.getAttachment() && input.getIsIncludeScreenshots()) {
 					if (ofNullable(dataStorage.load(l.getAttachment().getFileId())).isPresent()) {
-						return new InternalTicket.LogEntry(l.getId(), l.getLogMessage(), l.getAttachment(), true, input.getIsIncludeLogs());
+						return new InternalTicket.LogEntry(l.getId(),
+								l.getLogMessage(),
+								l.getAttachment(),
+								FileNameExtractor.extractFileName(dataEncoder, l.getAttachment().getFileId()),
+								true,
+								input.getIsIncludeLogs()
+						);
 					}
 				}
 				/* Forwarding enabled logs boolean if screens only required */
