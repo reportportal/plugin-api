@@ -16,7 +16,9 @@
 package com.epam.reportportal.extension.bugtracking;
 
 import com.epam.ta.reportportal.entity.attachment.Attachment;
+import com.epam.ta.reportportal.entity.enums.ImageFormat;
 import com.google.common.collect.Multimap;
+import org.apache.tika.mime.MediaType;
 
 import java.util.List;
 import java.util.Map;
@@ -131,10 +133,12 @@ public class InternalTicket {
 
 			private final String fileId;
 			private final String contentType;
+			private final boolean isImage;
 
 			public LogAttachment(String fileId, String contentType) {
 				this.fileId = fileId;
 				this.contentType = contentType;
+				this.isImage = ImageFormat.fromValue(MediaType.parse(contentType).getSubtype()).isPresent();
 			}
 
 			public String getFileId() {
@@ -143,6 +147,10 @@ public class InternalTicket {
 
 			public String getContentType() {
 				return contentType;
+			}
+
+			public boolean isImage() {
+				return isImage;
 			}
 		}
 	}

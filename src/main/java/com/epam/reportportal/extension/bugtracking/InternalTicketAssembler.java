@@ -77,15 +77,13 @@ public class InternalTicketAssembler implements Function<PostTicketRQ, InternalT
 			ticket.setLogs(logs.stream().map(l -> {
 				/* Get screenshots if required and they are present */
 				if (null != l.getAttachment() && input.getIsIncludeScreenshots()) {
-					if (ofNullable(dataStorage.load(l.getAttachment().getFileId())).isPresent()) {
-						return new InternalTicket.LogEntry(l.getId(),
-								l.getLogMessage(),
-								l.getAttachment(),
-								FileNameExtractor.extractFileName(dataEncoder, l.getAttachment().getFileId()),
-								true,
-								input.getIsIncludeLogs()
-						);
-					}
+					return new InternalTicket.LogEntry(l.getId(),
+							l.getLogMessage(),
+							l.getAttachment(),
+							FileNameExtractor.extractFileName(dataEncoder, l.getAttachment().getFileId()),
+							true,
+							input.getIsIncludeLogs()
+					);
 				}
 				/* Forwarding enabled logs boolean if screens only required */
 				return new InternalTicket.LogEntry(l.getId(), l.getLogMessage(), input.getIsIncludeLogs());
