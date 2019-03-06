@@ -15,10 +15,12 @@
  */
 package com.epam.reportportal.extension.bugtracking;
 
+import com.epam.reportportal.extension.util.FileNameExtractor;
 import com.epam.ta.reportportal.binary.DataStoreService;
 import com.epam.ta.reportportal.dao.LogRepository;
 import com.epam.ta.reportportal.dao.TestItemRepository;
 import com.epam.ta.reportportal.entity.log.Log;
+import com.epam.ta.reportportal.filesystem.DataEncoder;
 import com.epam.ta.reportportal.ws.model.externalsystem.PostTicketRQ;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.LinkedListMultimap;
@@ -40,17 +42,21 @@ import static java.util.Optional.ofNullable;
 @Service
 public class InternalTicketAssembler implements Function<PostTicketRQ, InternalTicket> {
 
-	private LogRepository logRepository;
+	private final LogRepository logRepository;
 
-	private TestItemRepository itemRepository;
+	private final TestItemRepository itemRepository;
 
-	private DataStoreService dataStorage;
+	private final DataStoreService dataStorage;
+
+	private final DataEncoder dataEncoder;
 
 	@Autowired
-	public InternalTicketAssembler(LogRepository logRepository, TestItemRepository itemRepository, DataStoreService dataStorage) {
+	public InternalTicketAssembler(LogRepository logRepository, TestItemRepository itemRepository, DataStoreService dataStorage,
+			DataEncoder dataEncoder) {
 		this.logRepository = logRepository;
 		this.itemRepository = itemRepository;
 		this.dataStorage = dataStorage;
+		this.dataEncoder = dataEncoder;
 	}
 
 	@Override
@@ -69,13 +75,20 @@ public class InternalTicketAssembler implements Function<PostTicketRQ, InternalT
 			);
 
 			ticket.setLogs(logs.stream().map(l -> {
-				boolean hasAttachment = false;
 				/* Get screenshots if required and they are present */
 				if (null != l.getAttachment() && input.getIsIncludeScreenshots()) {
-					hasAttachment = ofNullable(dataStorage.load(l.getAttachment().getFileId())).isPresent();
+					String fileId = l.getAttachment().getFileId();
+					if (ofNullable(dataStorage.load(fileId)).isPresent()) {
+						return new InternalTicket.LogEntry(l.getId(),
+								l.getLogMessage(),
+								FileNameExtractor.extractFileName(dataEncoder, fileId),
+								true,
+								input.getIsIncludeLogs()
+						);
+					}
 				}
 				/* Forwarding enabled logs boolean if screens only required */
-				return new InternalTicket.LogEntry(l, hasAttachment, input.getIsIncludeLogs());
+				return new InternalTicket.LogEntry(l.getId(), l.getLogMessage(), input.getIsIncludeLogs());
 			}).collect(Collectors.toList()));
 		}
 

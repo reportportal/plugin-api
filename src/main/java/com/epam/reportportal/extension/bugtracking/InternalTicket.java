@@ -15,7 +15,6 @@
  */
 package com.epam.reportportal.extension.bugtracking;
 
-import com.epam.ta.reportportal.entity.log.Log;
 import com.google.common.collect.Multimap;
 
 import java.util.List;
@@ -86,14 +85,9 @@ public class InternalTicket {
 		private boolean hasAttachment;
 		private boolean isIncludeLogs;
 
-		public LogEntry(Long logId, boolean includeLogs) {
+		public LogEntry(Long logId, String message, boolean includeLogs) {
 			this.logId = logId;
-			this.isIncludeLogs = includeLogs;
-		}
-
-		public LogEntry(Long logId, boolean hasAttachment, boolean includeLogs) {
-			this.logId = logId;
-			this.hasAttachment = hasAttachment;
+			this.message = message;
 			this.isIncludeLogs = includeLogs;
 		}
 
