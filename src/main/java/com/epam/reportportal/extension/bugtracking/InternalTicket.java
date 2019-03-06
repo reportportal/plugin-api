@@ -80,31 +80,69 @@ public class InternalTicket {
 	}
 
 	public static class LogEntry {
-		private Log log;
+		private Long logId;
+		private String message;
+		private String fileId;
 		private boolean hasAttachment;
 		private boolean isIncludeLogs;
 
-		public LogEntry(Log log, boolean includeLogs) {
-			this.log = log;
+		public LogEntry(Long logId, boolean includeLogs) {
+			this.logId = logId;
 			this.isIncludeLogs = includeLogs;
 		}
 
-		public LogEntry(Log log, boolean hasAttachment, boolean includeLogs) {
-			this.log = log;
+		public LogEntry(Long logId, boolean hasAttachment, boolean includeLogs) {
+			this.logId = logId;
 			this.hasAttachment = hasAttachment;
 			this.isIncludeLogs = includeLogs;
 		}
 
-		public Log getLog() {
-			return log;
+		public LogEntry(Long logId, String message, String fileId, boolean hasAttachment, boolean isIncludeLogs) {
+			this.logId = logId;
+			this.message = message;
+			this.fileId = fileId;
+			this.hasAttachment = hasAttachment;
+			this.isIncludeLogs = isIncludeLogs;
+		}
+
+		public Long getLogId() {
+			return logId;
+		}
+
+		public void setLogId(Long logId) {
+			this.logId = logId;
+		}
+
+		public String getMessage() {
+			return message;
+		}
+
+		public void setMessage(String message) {
+			this.message = message;
+		}
+
+		public String getFileId() {
+			return fileId;
+		}
+
+		public void setFileId(String fileId) {
+			this.fileId = fileId;
 		}
 
 		public boolean isHasAttachment() {
 			return hasAttachment;
 		}
 
+		public void setHasAttachment(boolean hasAttachment) {
+			this.hasAttachment = hasAttachment;
+		}
+
 		public boolean isIncludeLogs() {
 			return isIncludeLogs;
+		}
+
+		public void setIncludeLogs(boolean includeLogs) {
+			isIncludeLogs = includeLogs;
 		}
 	}
 }
