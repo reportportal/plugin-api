@@ -127,7 +127,7 @@ public class InternalTicket {
 			return isIncludeLogs;
 		}
 
-		private final class LogAttachment {
+		public static class LogAttachment {
 
 			private final String fileId;
 			private final String contentType;
