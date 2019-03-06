@@ -15,7 +15,6 @@
  */
 package com.epam.reportportal.extension.bugtracking;
 
-import com.epam.reportportal.extension.util.FileNameExtractor;
 import com.epam.ta.reportportal.binary.DataStoreService;
 import com.epam.ta.reportportal.dao.LogRepository;
 import com.epam.ta.reportportal.dao.TestItemRepository;
@@ -79,12 +78,7 @@ public class InternalTicketAssembler implements Function<PostTicketRQ, InternalT
 				if (null != l.getAttachment() && input.getIsIncludeScreenshots()) {
 					String fileId = l.getAttachment().getFileId();
 					if (ofNullable(dataStorage.load(fileId)).isPresent()) {
-						return new InternalTicket.LogEntry(l.getId(),
-								l.getLogMessage(),
-								FileNameExtractor.extractFileName(dataEncoder, fileId),
-								true,
-								input.getIsIncludeLogs()
-						);
+						return new InternalTicket.LogEntry(l.getId(), l.getLogMessage(), fileId, true, input.getIsIncludeLogs());
 					}
 				}
 				/* Forwarding enabled logs boolean if screens only required */
