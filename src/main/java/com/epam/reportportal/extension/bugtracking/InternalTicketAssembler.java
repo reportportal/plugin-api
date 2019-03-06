@@ -79,10 +79,11 @@ public class InternalTicketAssembler implements Function<PostTicketRQ, InternalT
 				if (null != l.getAttachment() && input.getIsIncludeScreenshots()) {
 					return new InternalTicket.LogEntry(l.getId(),
 							l.getLogMessage(),
-							l.getAttachment(),
-							FileNameExtractor.extractFileName(dataEncoder, l.getAttachment().getFileId()),
+							input.getIsIncludeLogs(),
 							true,
-							input.getIsIncludeLogs()
+							l.getAttachment().getFileId(),
+							FileNameExtractor.extractFileName(dataEncoder, l.getAttachment().getFileId()),
+							l.getAttachment().getContentType()
 					);
 				}
 				/* Forwarding enabled logs boolean if screens only required */
