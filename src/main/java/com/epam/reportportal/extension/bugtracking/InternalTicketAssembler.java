@@ -15,11 +15,12 @@
  */
 package com.epam.reportportal.extension.bugtracking;
 
+import com.epam.reportportal.extension.util.FileNameExtractor;
 import com.epam.ta.reportportal.binary.DataStoreService;
 import com.epam.ta.reportportal.dao.LogRepository;
 import com.epam.ta.reportportal.dao.TestItemRepository;
 import com.epam.ta.reportportal.entity.log.Log;
-import com.epam.ta.reportportal.ws.model.externalsystem.PostFormField;
+import com.epam.ta.reportportal.filesystem.DataEncoder;
 import com.epam.ta.reportportal.ws.model.externalsystem.PostTicketRQ;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.LinkedListMultimap;
@@ -27,10 +28,11 @@ import com.google.common.collect.Multimap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
+import java.util.stream.Collectors;
+
+import static java.util.Optional.ofNullable;
 
 /**
  * Converts REST model into internal domain model representation
@@ -40,54 +42,59 @@ import java.util.function.Function;
 @Service
 public class InternalTicketAssembler implements Function<PostTicketRQ, InternalTicket> {
 
-	private LogRepository logRepository;
+	private final LogRepository logRepository;
 
-	private TestItemRepository itemRepository;
+	private final TestItemRepository itemRepository;
 
-	private DataStoreService dataStorage;
+	private final DataStoreService dataStorage;
+
+	private final DataEncoder dataEncoder;
 
 	@Autowired
-	public InternalTicketAssembler(LogRepository logRepository, TestItemRepository itemRepository, DataStoreService dataStorage) {
+	public InternalTicketAssembler(LogRepository logRepository, TestItemRepository itemRepository, DataStoreService dataStorage,
+			DataEncoder dataEncoder) {
 		this.logRepository = logRepository;
 		this.itemRepository = itemRepository;
 		this.dataStorage = dataStorage;
+		this.dataEncoder = dataEncoder;
 	}
 
 	@Override
 	public InternalTicket apply(PostTicketRQ input) {
 		InternalTicket ticket = new InternalTicket();
 
-		if (null != input.getFields()) {
+		ofNullable(input.getFields()).ifPresent(fields -> {
 			Multimap<String, String> fieldsMultimap = LinkedListMultimap.create();
-			for (PostFormField field : input.getFields()) {
-				fieldsMultimap.putAll(field.getId(), field.getValue());
-			}
+			fields.forEach(f -> fieldsMultimap.putAll(f.getId(), f.getValue()));
 			ticket.setFields(fieldsMultimap);
-		}
+		});
 
 		if (input.getIsIncludeLogs() || input.getIsIncludeScreenshots()) {
 			List<Log> logs = logRepository.findByTestItemId(input.getTestItemId(),
 					0 == input.getNumberOfLogs() ? Integer.MAX_VALUE : input.getNumberOfLogs()
 			);
-			List<InternalTicket.LogEntry> entries = new ArrayList<>(logs.size());
-			for (Log log : logs) {
-				InputStream attachment = null;
+
+			ticket.setLogs(logs.stream().map(l -> {
 				/* Get screenshots if required and they are present */
-				if (null != log.getAttachment() && input.getIsIncludeScreenshots()) {
-					attachment = dataStorage.load(log.getAttachment());
+				if (null != l.getAttachment() && input.getIsIncludeScreenshots()) {
+					return new InternalTicket.LogEntry(l.getId(),
+							l.getLogMessage(),
+							input.getIsIncludeLogs(),
+							true,
+							l.getAttachment().getFileId(),
+							FileNameExtractor.extractFileName(dataEncoder, l.getAttachment().getFileId()),
+							l.getAttachment().getContentType()
+					);
 				}
 				/* Forwarding enabled logs boolean if screens only required */
-				entries.add(new InternalTicket.LogEntry(log, attachment, input.getIsIncludeLogs()));
-			}
-			ticket.setLogs(entries);
+				return new InternalTicket.LogEntry(l.getId(), l.getLogMessage(), input.getIsIncludeLogs());
+			}).collect(Collectors.toList()));
 		}
 
 		if (input.getIsIncludeComments()) {
-			itemRepository.findById(input.getTestItemId()).ifPresent(item -> {
-				if (null != item.getItemResults().getIssue().getIssueDescription()) {
-					ticket.setComments(item.getItemResults().getIssue().getIssueDescription());
-				}
-			});
+			itemRepository.findById(input.getTestItemId())
+					.ifPresent(item -> ofNullable(item.getItemResults()
+							.getIssue()).ifPresent(issue -> ofNullable(issue.getIssueDescription()).ifPresent(ticket::setComments)));
 
 		}
 

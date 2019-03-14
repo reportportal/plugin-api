@@ -15,10 +15,10 @@
  */
 package com.epam.reportportal.extension.bugtracking;
 
-import com.epam.ta.reportportal.entity.log.Log;
+import com.epam.ta.reportportal.entity.enums.ImageFormat;
 import com.google.common.collect.Multimap;
+import org.apache.tika.mime.MediaType;
 
-import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
@@ -81,26 +81,63 @@ public class InternalTicket {
 	}
 
 	public static class LogEntry {
-		private Log log;
-		private InputStream attachment;
+		private Long logId;
+		private String message;
 		private boolean isIncludeLogs;
+		private boolean hasAttachment;
+		private String fileId;
+		private String decodedFileName;
+		private String contentType;
+		private boolean isImage;
 
-		public LogEntry(Log log, InputStream attachment, boolean includeLogs) {
-			this.log = log;
-			this.attachment = attachment;
+		public LogEntry(Long logId, String message, boolean includeLogs) {
+			this.logId = logId;
+			this.message = message;
 			this.isIncludeLogs = includeLogs;
 		}
 
-		public Log getLog() {
-			return log;
+		public LogEntry(Long logId, String message, boolean isIncludeLogs, boolean hasAttachment, String fileId, String decodedFileName,
+				String contentType) {
+			this.logId = logId;
+			this.message = message;
+			this.isIncludeLogs = isIncludeLogs;
+			this.hasAttachment = hasAttachment;
+			this.fileId = fileId;
+			this.decodedFileName = decodedFileName;
+			this.contentType = contentType;
+			this.isImage = ImageFormat.fromValue(MediaType.parse(contentType).getSubtype()).isPresent();
 		}
 
-		public InputStream getAttachment() {
-			return attachment;
+		public Long getLogId() {
+			return logId;
 		}
 
-		public boolean getIncludeLogs() {
+		public String getMessage() {
+			return message;
+		}
+
+		public boolean isIncludeLogs() {
 			return isIncludeLogs;
+		}
+
+		public boolean isHasAttachment() {
+			return hasAttachment;
+		}
+
+		public String getFileId() {
+			return fileId;
+		}
+
+		public String getDecodedFileName() {
+			return decodedFileName;
+		}
+
+		public String getContentType() {
+			return contentType;
+		}
+
+		public boolean isImage() {
+			return isImage;
 		}
 	}
 }
