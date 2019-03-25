@@ -15,28 +15,31 @@ public interface SaucelabsExtensionPoint extends ExtensionPoint {
 	/**
 	 * Downloads job video
 	 *
-	 * @param system Integration parameters
-	 * @param jobId  Saucelabs job id
+	 * @param system     Integration parameters
+	 * @param sessionId  Saucelabs job id
+	 * @param dataCenter Saucelabs datacenter
 	 * @return Video input stream
 	 */
-	InputStream downloadVideo(Integration system, String jobId);
+	InputStream downloadVideo(Integration system, String sessionId, String dataCenter);
 
 	/**
 	 * Detailed information about Saucelabs steps
 	 *
-	 * @param system Integration parameters
-	 * @param jobId  Saucelabs job id
+	 * @param system     Integration parameters
+	 * @param jobId      Saucelabs job id
+	 * @param dataCenter Saucelabs datacenter
 	 * @return Json object that contains steps
 	 */
-	JSONObject getLogs(Integration system, String jobId);
+	Object getLogs(Integration system, String jobId, String dataCenter);
 
 	/**
 	 * Returns detailed information about the job
 	 *
-	 * @param system Integration parameters
-	 * @param jobId  Saucelabs job id
+	 * @param system     Integration parameters
+	 * @param jobId      Saucelabs job id
+	 * @param dataCenter Saucelabs datacenter
 	 * @return Json object that contains job information
 	 */
-	JSONObject getJobInfo(Integration system, String jobId);
+	Object getJobInfo(Integration system, String jobId, String dataCenter);
 
 }
