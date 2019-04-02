@@ -1,11 +1,11 @@
 package com.epam.reportportal.extension.saucelabs;
 
-import com.epam.reportportal.extension.bugtracking.BtsExtension;
 import com.epam.ta.reportportal.entity.integration.Integration;
-import org.json.JSONObject;
+import org.apache.poi.ss.formula.functions.T;
 import org.pf4j.ExtensionPoint;
 
 import java.io.InputStream;
+import java.util.List;
 
 /**
  * @author <a href="mailto:pavel_bortnik@epam.com">Pavel Bortnik</a>
@@ -41,5 +41,9 @@ public interface SaucelabsExtensionPoint extends ExtensionPoint {
 	 * @return Json object that contains job information
 	 */
 	Object getJobInfo(Integration system, String jobId, String dataCenter);
+
+	List<String> getCommandNames();
+
+	String executeCommand(String string);
 
 }
