@@ -16,7 +16,7 @@
 package com.epam.reportportal.extension.common;
 
 import com.epam.reportportal.extension.bugtracking.BtsExtension;
-import com.epam.reportportal.extension.saucelabs.SaucelabsExtensionPoint;
+import com.epam.reportportal.extension.ReportPortalExtensionPoint;
 
 import java.util.Arrays;
 import java.util.Optional;
@@ -28,7 +28,7 @@ import java.util.Optional;
  */
 public enum ExtensionPoint {
 	BTS(BtsExtension.class),
-	SAUCELABS(SaucelabsExtensionPoint.class);
+	SAUCELABS(ReportPortalExtensionPoint.class);
 
 	private Class<? extends org.pf4j.ExtensionPoint> extensionClass;
 
