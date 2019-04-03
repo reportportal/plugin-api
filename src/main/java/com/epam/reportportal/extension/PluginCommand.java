@@ -1,8 +1,6 @@
 package com.epam.reportportal.extension;
 
 import com.epam.ta.reportportal.entity.integration.Integration;
-import com.epam.ta.reportportal.entity.integration.IntegrationParams;
-import org.apache.poi.ss.formula.functions.T;
 
 import java.util.Map;
 
@@ -11,6 +9,13 @@ import java.util.Map;
  */
 public interface PluginCommand<T> {
 
+	/**
+	 * Executes plugin command
+	 *
+	 * @param integration Configured ReportPortal integration
+	 * @param params      Plugin Command parameters
+	 * @return Result
+	 */
 	T executeCommand(Integration integration, Map<String, Object> params);
 
 }

@@ -28,7 +28,7 @@ import java.util.Optional;
  */
 public enum ExtensionPoint {
 	BTS(BtsExtension.class),
-	SAUCELABS(ReportPortalExtensionPoint.class);
+	REPORT_PORTAL(ReportPortalExtensionPoint.class);
 
 	private Class<? extends org.pf4j.ExtensionPoint> extensionClass;
 
