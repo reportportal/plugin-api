@@ -24,4 +24,8 @@ public interface ReportPortalExtensionPoint extends ExtensionPoint {
 	 */
 	PluginCommand getCommandToExecute(String commandName);
 
+	default IntegrationGroupEnum getIntegrationGroup() {
+		return IntegrationGroupEnum.OTHER;
+	}
+
 }
