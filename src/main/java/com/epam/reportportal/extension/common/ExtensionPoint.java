@@ -16,6 +16,7 @@
 package com.epam.reportportal.extension.common;
 
 import com.epam.reportportal.extension.bugtracking.BtsExtension;
+import com.epam.reportportal.extension.ReportPortalExtensionPoint;
 
 import java.util.Arrays;
 import java.util.Optional;
@@ -26,7 +27,8 @@ import java.util.Optional;
  * @author Andrei Varabyeu
  */
 public enum ExtensionPoint {
-	BTS(BtsExtension.class);
+	BTS(BtsExtension.class),
+	REPORT_PORTAL(ReportPortalExtensionPoint.class);
 
 	private Class<? extends org.pf4j.ExtensionPoint> extensionClass;
 
