@@ -8,7 +8,7 @@ plugins {
 description = 'EPAM Report portal. Plugin extension APIs'
 
 
-apply from: 'https://raw.githubusercontent.com/reportportal/gradle-scripts/v5/release-commons.gradle'
+apply from: 'https://raw.githubusercontent.com/reportportal/gradle-scripts/master/release-commons.gradle'
 apply from: 'build-quality.gradle'
 
 
