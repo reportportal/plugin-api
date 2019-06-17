@@ -39,8 +39,8 @@ project.ext {
 dependencies {
     if (releaseMode) {
         compile 'com.epam.reportportal:commons-model:5.0.0-BETA-3'
-        compile 'com.epam.reportportal:commons-rules:5.0.0-BETA-1'
-        compile 'com.epam.reportportal:commons-dao:5.0.0-BETA-1'
+        compile 'com.epam.reportportal:commons-rules:5.0.0-BETA-3'
+        compile 'com.epam.reportportal:commons-dao:5.0.0-BETA-3'
     } else {
         compile 'com.github.reportportal:commons-dao:03aa1f8f'
         compile 'com.github.reportportal:commons-model:480871f'
