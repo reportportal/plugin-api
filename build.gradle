@@ -42,7 +42,7 @@ dependencies {
         compile 'com.epam.reportportal:commons-rules:5.0.0-BETA-3'
         compile 'com.epam.reportportal:commons-dao:5.0.0-BETA-3'
     } else {
-        compile 'com.github.reportportal:commons-dao:1b285c05'
+        compile 'com.github.reportportal:commons-dao:1b285c054a'
         compile 'com.github.reportportal:commons-model:5.0.0-BETA-4'
         compile('com.github.reportportal:commons-rules:5.0.0-BETA-4')
     }
