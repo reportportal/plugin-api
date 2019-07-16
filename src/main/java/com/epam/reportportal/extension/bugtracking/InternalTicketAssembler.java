@@ -21,6 +21,7 @@ import com.epam.ta.reportportal.dao.LogRepository;
 import com.epam.ta.reportportal.dao.TestItemRepository;
 import com.epam.ta.reportportal.entity.log.Log;
 import com.epam.ta.reportportal.filesystem.DataEncoder;
+import com.epam.ta.reportportal.ws.model.externalsystem.PostFormField;
 import com.epam.ta.reportportal.ws.model.externalsystem.PostTicketRQ;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.LinkedListMultimap;
@@ -28,6 +29,7 @@ import com.google.common.collect.Multimap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -63,32 +65,10 @@ public class InternalTicketAssembler implements Function<PostTicketRQ, InternalT
 	public InternalTicket apply(PostTicketRQ input) {
 		InternalTicket ticket = new InternalTicket();
 
-		ofNullable(input.getFields()).ifPresent(fields -> {
-			Multimap<String, String> fieldsMultimap = LinkedListMultimap.create();
-			fields.forEach(f -> fieldsMultimap.putAll(f.getId(), f.getValue()));
-			ticket.setFields(fieldsMultimap);
-		});
+		ofNullable(input.getFields()).ifPresent(fields -> ticket.setFields(getFieldsMap(fields)));
 
 		if (input.getIsIncludeLogs() || input.getIsIncludeScreenshots()) {
-			List<Log> logs = logRepository.findByTestItemId(input.getTestItemId(),
-					0 == input.getNumberOfLogs() ? Integer.MAX_VALUE : input.getNumberOfLogs()
-			);
-
-			ticket.setLogs(logs.stream().map(l -> {
-				/* Get screenshots if required and they are present */
-				if (null != l.getAttachment() && input.getIsIncludeScreenshots()) {
-					return new InternalTicket.LogEntry(l.getId(),
-							l.getLogMessage(),
-							input.getIsIncludeLogs(),
-							true,
-							l.getAttachment().getFileId(),
-							FileNameExtractor.extractFileName(dataEncoder, l.getAttachment().getFileId()),
-							l.getAttachment().getContentType()
-					);
-				}
-				/* Forwarding enabled logs boolean if screens only required */
-				return new InternalTicket.LogEntry(l.getId(), l.getLogMessage(), input.getIsIncludeLogs());
-			}).collect(Collectors.toList()));
+			ticket.setLogs(getLogEntries(input));
 		}
 
 		if (input.getIsIncludeComments()) {
@@ -102,5 +82,33 @@ public class InternalTicketAssembler implements Function<PostTicketRQ, InternalT
 			ticket.setBackLinks(ImmutableMap.copyOf(input.getBackLinks()));
 		}
 		return ticket;
+	}
+
+	private Multimap<String, String> getFieldsMap(List<PostFormField> postFormFields) {
+		Multimap<String, String> fieldsMap = LinkedListMultimap.create(postFormFields.size());
+		postFormFields.forEach(f -> fieldsMap.putAll(f.getId(), ofNullable(f.getValue()).orElseGet(Collections::emptyList)));
+		return fieldsMap;
+	}
+
+	private List<InternalTicket.LogEntry> getLogEntries(PostTicketRQ input) {
+		List<Log> logs = logRepository.findByTestItemId(input.getTestItemId(),
+				0 == input.getNumberOfLogs() ? Integer.MAX_VALUE : input.getNumberOfLogs()
+		);
+
+		return logs.stream().map(l -> {
+			/* Get screenshots if required and they are present */
+			if (null != l.getAttachment() && input.getIsIncludeScreenshots()) {
+				return new InternalTicket.LogEntry(l.getId(),
+						l.getLogMessage(),
+						input.getIsIncludeLogs(),
+						true,
+						l.getAttachment().getFileId(),
+						FileNameExtractor.extractFileName(dataEncoder, l.getAttachment().getFileId()),
+						l.getAttachment().getContentType()
+				);
+			}
+			/* Forwarding enabled logs boolean if screens only required */
+			return new InternalTicket.LogEntry(l.getId(), l.getLogMessage(), input.getIsIncludeLogs());
+		}).collect(Collectors.toList());
 	}
 }
