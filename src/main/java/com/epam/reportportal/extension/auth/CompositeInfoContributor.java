@@ -16,12 +16,12 @@
 
 package com.epam.reportportal.extension.auth;
 
-import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import org.springframework.boot.actuate.info.Info;
 import org.springframework.boot.actuate.info.InfoContributor;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
+import java.util.Map;
 
 /**
  * @author <a href="mailto:ivan_budayeu@epam.com">Ivan Budayeu</a>
@@ -29,18 +29,18 @@ import java.util.List;
 @Component
 public class CompositeInfoContributor implements InfoContributor {
 
-	private final List<ReportPortalInfoContributor> reportPortalInfoContributors = Lists.newArrayList();
+	private final Map<String, ReportPortalInfoContributor> reportPortalInfoContributors = Maps.newLinkedHashMap();
 
 	@Override
 	public void contribute(Info.Builder builder) {
-		reportPortalInfoContributors.forEach(infoContributor -> infoContributor.contribute(builder));
+		reportPortalInfoContributors.values().forEach(infoContributor -> infoContributor.contribute(builder));
 	}
 
-	public List<ReportPortalInfoContributor> getReportPortalInfoContributors() {
+	public Map<String, ReportPortalInfoContributor> getReportPortalInfoContributors() {
 		return reportPortalInfoContributors;
 	}
 
-	public void addInfoContributor(ReportPortalInfoContributor infoContributor) {
-		reportPortalInfoContributors.add(infoContributor);
+	public void addInfoContributor(String name, ReportPortalInfoContributor infoContributor) {
+		reportPortalInfoContributors.put(name, infoContributor);
 	}
 }
