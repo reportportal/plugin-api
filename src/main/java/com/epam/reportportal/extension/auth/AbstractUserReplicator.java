@@ -15,13 +15,12 @@
  */
 package com.epam.reportportal.extension.auth;
 
-import com.epam.ta.reportportal.BinaryData;
+import com.epam.ta.reportportal.binary.UserDataStoreService;
 import com.epam.ta.reportportal.dao.ProjectRepository;
 import com.epam.ta.reportportal.dao.UserRepository;
+import com.epam.ta.reportportal.entity.attachment.BinaryData;
 import com.epam.ta.reportportal.entity.project.Project;
 import com.epam.ta.reportportal.entity.user.User;
-import com.epam.ta.reportportal.filesystem.DataEncoder;
-import com.epam.ta.reportportal.filesystem.DataStore;
 import com.epam.ta.reportportal.util.PersonalProjectService;
 import com.google.common.collect.Maps;
 import org.apache.tika.io.TikaInputStream;
@@ -51,16 +50,14 @@ public class AbstractUserReplicator {
 	protected final UserRepository userRepository;
 	protected final ProjectRepository projectRepository;
 	protected final PersonalProjectService personalProjectService;
-	protected final DataStore dataStorage;
-	protected final DataEncoder encoder;
+	protected UserDataStoreService userDataStoreService;
 
 	public AbstractUserReplicator(UserRepository userRepository, ProjectRepository projectRepository,
-			PersonalProjectService personalProjectService, DataStore dataStorage, DataEncoder encoder) {
+			PersonalProjectService personalProjectService, UserDataStoreService userDataStoreService) {
 		this.userRepository = userRepository;
 		this.projectRepository = projectRepository;
 		this.personalProjectService = personalProjectService;
-		this.dataStorage = dataStorage;
-		this.encoder = encoder;
+		this.userDataStoreService = userDataStoreService;
 	}
 
 	/**
@@ -82,7 +79,7 @@ public class AbstractUserReplicator {
 	protected com.epam.ta.reportportal.entity.Metadata defaultMetaData() {
 		Map<String, Object> metaDataMap = new HashMap<>();
 		long nowInMillis = LocalDateTime.now().toInstant(ZoneOffset.UTC).toEpochMilli();
-		metaDataMap.put("lastLogin", nowInMillis);
+		metaDataMap.put("last_login", nowInMillis);
 		metaDataMap.put("synchronizationDate", nowInMillis);
 		return new com.epam.ta.reportportal.entity.Metadata(metaDataMap);
 	}
@@ -106,21 +103,16 @@ public class AbstractUserReplicator {
 	 */
 	protected void checkEmail(String email) {
 		if (userRepository.findByEmail(email).isPresent()) {
-			throw new RuntimeException("User with email '" + email + "' already exists");
+			throw new UserSynchronizationException("User with email '" + email + "' already exists");
 		}
 	}
 
-	protected String uploadPhoto(String login, byte[] data) {
-		return uploadPhoto(login, data, resolveContentType(data));
+	protected void uploadPhoto(User user, BinaryData data) {
+		userDataStoreService.saveUserPhoto(user, data);
 	}
 
-	protected String uploadPhoto(String login, byte[] data, String contentType) {
-		BinaryData photo = new BinaryData(contentType, (long) data.length, new ByteArrayInputStream(data));
-		return uploadPhoto(login, photo);
-	}
-
-	protected String uploadPhoto(String login, BinaryData data) {
-		return encoder.encode(dataStorage.save(login, data.getInputStream()));
+	protected void uploadPhoto(User user, byte[] data) {
+		uploadPhoto(user, new BinaryData(resolveContentType(data), (long) data.length, new ByteArrayInputStream(data)));
 	}
 
 	private String resolveContentType(byte[] data) {
