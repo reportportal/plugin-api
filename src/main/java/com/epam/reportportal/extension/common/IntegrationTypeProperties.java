@@ -35,6 +35,7 @@ public enum IntegrationTypeProperties {
 	RESOURCES_DIRECTORY("resources"),
 	COMMANDS("allowedCommands"),
 	VERSION("version"),
+	SERVICE("service"),
 	FILE_NAME("name");
 
 	private String attribute;
@@ -55,4 +56,5 @@ public enum IntegrationTypeProperties {
 
 	public String getAttribute() {
 		return attribute;
-	}}
+	}
+}
