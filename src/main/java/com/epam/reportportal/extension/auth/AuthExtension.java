@@ -2,6 +2,7 @@ package com.epam.reportportal.extension.auth;
 
 import com.epam.reportportal.extension.IntegrationGroupEnum;
 import com.epam.reportportal.extension.ReportPortalExtensionPoint;
+import com.epam.reportportal.extension.common.InitializingExtensionPoint;
 
 /**
  * @author <a href="mailto:ivan_budayeu@epam.com">Ivan Budayeu</a>

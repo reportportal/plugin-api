@@ -15,6 +15,7 @@
  */
 package com.epam.reportportal.extension.auth;
 
+import com.epam.reportportal.extension.auth.exception.UserSynchronizationException;
 import com.epam.ta.reportportal.binary.UserDataStoreService;
 import com.epam.ta.reportportal.dao.ProjectRepository;
 import com.epam.ta.reportportal.dao.UserRepository;

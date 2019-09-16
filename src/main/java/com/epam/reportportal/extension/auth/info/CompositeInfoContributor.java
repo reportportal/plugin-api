@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.epam.reportportal.extension.auth;
+package com.epam.reportportal.extension.auth.info;
 
 import com.google.common.collect.Maps;
 import org.springframework.boot.actuate.info.Info;

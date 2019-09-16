@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.epam.reportportal.extension.auth;
+package com.epam.reportportal.extension.auth.exception;
 
 import org.springframework.security.core.AuthenticationException;
 

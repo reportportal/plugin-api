@@ -1,6 +1,6 @@
 package com.epam.reportportal.extension.auth.data;
 
-import com.epam.reportportal.extension.auth.BeanProvider;
+import com.epam.reportportal.extension.auth.provider.BeanProvider;
 
 /**
  * @author <a href="mailto:ivan_budayeu@epam.com">Ivan Budayeu</a>

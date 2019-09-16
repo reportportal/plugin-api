@@ -14,15 +14,16 @@
  * limitations under the License.
  */
 
-package com.epam.reportportal.extension.auth;
+package com.epam.reportportal.extension.common;
 
-import org.springframework.boot.actuate.info.Info;
+import com.epam.reportportal.extension.auth.data.BeanProviderData;
+
+import java.util.List;
 
 /**
  * @author <a href="mailto:ivan_budayeu@epam.com">Ivan Budayeu</a>
  */
-@FunctionalInterface
-public interface ReportPortalInfoContributor {
+public interface InitializingExtensionPoint {
 
-	void contribute(Info.Builder builder);
+	List<BeanProviderData> getBeanProviders();
 }
