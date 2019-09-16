@@ -2,26 +2,28 @@ package com.epam.reportportal.extension.event;
 
 import org.springframework.context.ApplicationEvent;
 
+import java.util.List;
+
 /**
  * @author <a href="mailto:ivan_budayeu@epam.com">Ivan Budayeu</a>
  */
 public class IntegrationEvent extends ApplicationEvent {
 
-	private Long integrationId;
+	private final List<Long> integrationIds;
 
-	private String integrationTypeName;
+	private final String integrationTypeName;
 
-	private IntegrationEventType eventType;
+	private final IntegrationEventType eventType;
 
-	public IntegrationEvent(Long integrationId, String integrationTypeName, IntegrationEventType eventType) {
-		super(integrationId);
-		this.integrationId = integrationId;
+	public IntegrationEvent(List<Long> integrationIds, String integrationTypeName, IntegrationEventType eventType) {
+		super(integrationIds);
+		this.integrationIds = integrationIds;
 		this.integrationTypeName = integrationTypeName;
 		this.eventType = eventType;
 	}
 
-	public Long getIntegrationId() {
-		return integrationId;
+	public List<Long> getIntegrationIds() {
+		return integrationIds;
 	}
 
 	public String getIntegrationTypeName() {
