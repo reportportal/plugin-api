@@ -42,7 +42,7 @@ public class RpManifestPluginDescriptorFinder extends ManifestPluginDescriptorFi
 	protected RpPluginDescriptor createPluginDescriptor(Manifest manifest) {
 		PluginDescriptor pluginDescriptor = super.createPluginDescriptor(manifest);
 		Attributes attributes = manifest.getMainAttributes();
-		String service = ofNullable(attributes.getValue("Plugin-service")).orElseThrow(() -> new ReportPortalException(ErrorType.PLUGIN_UPLOAD_ERROR,
+		String service = ofNullable(attributes.getValue("Plugin-Service")).orElseThrow(() -> new ReportPortalException(ErrorType.PLUGIN_UPLOAD_ERROR,
 				"Plugin service attribute not found"
 		));
 		return new RpPluginDescriptor(pluginDescriptor, service);
