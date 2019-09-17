@@ -31,6 +31,10 @@ import org.springframework.context.annotation.Configuration;
 
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.Collections;
+import java.util.Set;
+
+import static java.util.Optional.ofNullable;
 
 @Configuration
 public class PluginConfiguration {
@@ -83,6 +87,27 @@ public class PluginConfiguration {
 			@Override
 			protected ExtensionFactory createExtensionFactory() {
 				return new ReportPortalExtensionFactory(resourcesDir, integrationTypeRepository, this, context);
+			}
+
+			@Override
+			protected ExtensionFinder createExtensionFinder() {
+				RpExtensionFinder extensionFinder = new RpExtensionFinder(this);
+				addPluginStateListener(extensionFinder);
+				return extensionFinder;
+			}
+
+			class RpExtensionFinder extends DefaultExtensionFinder {
+
+				private RpExtensionFinder(PluginManager pluginManager) {
+					super(pluginManager);
+					finders.clear();
+					finders.add(new LegacyExtensionFinder(pluginManager) {
+						@Override
+						public Set<String> findClassNames(String pluginId) {
+							return ofNullable(super.findClassNames(pluginId)).orElseGet(Collections::emptySet);
+						}
+					});
+				}
 			}
 		};
 	}
