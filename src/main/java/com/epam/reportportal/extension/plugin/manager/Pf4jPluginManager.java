@@ -360,7 +360,8 @@ public class Pf4jPluginManager extends AbstractIdleService implements Pf4jPlugin
 		if (!pluginService.equalsIgnoreCase(newPluginInfo.getService())) {
 			removeUploadingPlugin(fileName);
 			throw new ReportPortalException(ErrorType.UNABLE_INTERACT_WITH_INTEGRATION,
-					Suppliers.formattedSupplier("Plugin service = '{}', but expected - '{}'", newPluginInfo.getService(), "uat").get()
+					Suppliers.formattedSupplier("Plugin service = '{}', but expected - '{}'", newPluginInfo.getService(), pluginService)
+							.get()
 			);
 		}
 	}
