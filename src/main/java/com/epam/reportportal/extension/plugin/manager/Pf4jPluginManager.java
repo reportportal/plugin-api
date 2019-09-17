@@ -193,8 +193,11 @@ public class Pf4jPluginManager extends AbstractIdleService implements Pf4jPlugin
 	public boolean deletePlugin(IntegrationType integrationType) {
 		ofNullable(integrationType.getDetails()).flatMap(details -> ofNullable(details.getDetails())).ifPresent(details -> {
 			deletePluginFiles(details);
-			removeDependencies(integrationType.getName(), details);
-			destroyDependency(integrationType.getName());
+			ofNullable(pluginManager.getPlugin(integrationType.getName())).ifPresent(pluginWrapper -> {
+				removeDependencies(pluginWrapper.getPluginId(), details);
+				destroyDependency(pluginWrapper.getPluginId());
+			});
+
 		});
 
 		return pluginManager.deletePlugin(integrationType.getName());
