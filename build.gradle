@@ -42,8 +42,8 @@ dependencies {
         compile 'com.epam.reportportal:commons-rules:5.0.0-BETA-6'
         compile 'com.epam.reportportal:commons-dao:5.0.0-BETA-7'
     } else {
-        compile 'com.github.reportportal:commons-dao:93ec197'
-        compile 'com.github.reportportal:commons-model:f9127f0'
+        compile 'com.github.reportportal:commons-dao:f6231972'
+        compile 'com.github.reportportal:commons-model:520b7d86'
         compile('com.github.reportportal:commons-rules:5.0.0-BETA-6')
         compile 'org.springframework.boot:spring-boot-starter-actuator'
         compile 'org.springframework.security.oauth:spring-security-oauth2:2.2.1.RELEASE'
