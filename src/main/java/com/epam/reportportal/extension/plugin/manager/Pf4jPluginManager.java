@@ -144,7 +144,13 @@ public class Pf4jPluginManager extends AbstractIdleService implements Pf4jPlugin
 			Optional<String> service = IntegrationTypeProperties.SERVICE.getValue(details).map(String::valueOf);
 			return service.isPresent() && pluginService.equalsIgnoreCase(service.get());
 		}).map(details -> {
-			Path pluginPath = Paths.get(pluginsDir);
+			String fileName = IntegrationTypeProperties.FILE_NAME.getValue(details)
+					.map(String::valueOf)
+					.orElseThrow(() -> new ReportPortalException(ErrorType.PLUGIN_UPLOAD_ERROR,
+							Suppliers.formattedSupplier("'File name' property of the plugin - '{}' is not specified", pluginId).get()
+					));
+
+			Path pluginPath = Paths.get(pluginsDir, fileName);
 			if (Files.notExists(pluginPath)) {
 				String fileId = IntegrationTypeProperties.FILE_ID.getValue(details)
 						.map(String::valueOf)

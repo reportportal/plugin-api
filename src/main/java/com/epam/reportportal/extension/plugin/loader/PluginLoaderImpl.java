@@ -122,7 +122,7 @@ public class PluginLoaderImpl implements PluginLoader {
 
 	@Override
 	public void copyFromDataStore(String fileId, Path pluginPath) throws IOException {
-		Files.createDirectories(pluginPath);
+		Files.createDirectories(pluginPath.getParent());
 		Files.copy(dataStore.load(fileId), pluginPath);
 	}
 
