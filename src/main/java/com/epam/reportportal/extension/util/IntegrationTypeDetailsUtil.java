@@ -17,12 +17,8 @@
 package com.epam.reportportal.extension.util;
 
 import com.epam.reportportal.extension.common.IntegrationTypeProperties;
-import com.epam.ta.reportportal.commons.validation.Suppliers;
 import com.epam.ta.reportportal.entity.integration.IntegrationType;
-import com.epam.ta.reportportal.exception.ReportPortalException;
-import com.epam.ta.reportportal.ws.model.ErrorType;
 
-import java.util.Map;
 import java.util.Optional;
 
 import static java.util.Optional.ofNullable;
@@ -37,11 +33,7 @@ public class IntegrationTypeDetailsUtil {
 	}
 
 	public static Optional<String> getDetailsValueByKey(IntegrationTypeProperties property, IntegrationType integrationType) {
-		Map<String, Object> details = ofNullable(integrationType.getDetails()).flatMap(integrationTypeDetails -> ofNullable(
-				integrationTypeDetails.getDetails()))
-				.orElseThrow(() -> new ReportPortalException(ErrorType.UNABLE_INTERACT_WITH_INTEGRATION,
-						Suppliers.formattedSupplier("Details for integration type - '{}' not found", integrationType.getName()).get()
-				));
-		return property.getValue(details).map(String::valueOf);
+		return ofNullable(integrationType.getDetails()).flatMap(integrationTypeDetails -> ofNullable(integrationTypeDetails.getDetails()))
+				.flatMap(details -> property.getValue(details).map(String::valueOf));
 	}
 }
