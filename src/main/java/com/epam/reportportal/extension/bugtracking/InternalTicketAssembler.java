@@ -16,7 +16,7 @@
 package com.epam.reportportal.extension.bugtracking;
 
 import com.epam.reportportal.extension.util.FileNameExtractor;
-import com.epam.ta.reportportal.binary.DataStoreService;
+import com.epam.ta.reportportal.binary.impl.AttachmentDataStoreService;
 import com.epam.ta.reportportal.dao.LogRepository;
 import com.epam.ta.reportportal.dao.TestItemRepository;
 import com.epam.ta.reportportal.entity.log.Log;
@@ -48,16 +48,16 @@ public class InternalTicketAssembler implements Function<PostTicketRQ, InternalT
 
 	private final TestItemRepository itemRepository;
 
-	private final DataStoreService dataStorage;
+	private final AttachmentDataStoreService attachmentDataStoreService;
 
 	private final DataEncoder dataEncoder;
 
 	@Autowired
-	public InternalTicketAssembler(LogRepository logRepository, TestItemRepository itemRepository, DataStoreService dataStorage,
-			DataEncoder dataEncoder) {
+	public InternalTicketAssembler(LogRepository logRepository, TestItemRepository itemRepository,
+			AttachmentDataStoreService attachmentDataStoreService, DataEncoder dataEncoder) {
 		this.logRepository = logRepository;
 		this.itemRepository = itemRepository;
-		this.dataStorage = dataStorage;
+		this.attachmentDataStoreService = attachmentDataStoreService;
 		this.dataEncoder = dataEncoder;
 	}
 
