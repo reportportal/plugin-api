@@ -38,12 +38,12 @@ project.ext {
 
 dependencies {
     if (releaseMode) {
-        compile 'com.epam.reportportal:commons-model:5.0.0-BETA-13'
+        compile 'com.epam.reportportal:commons-model:5.0.0-RC-1'
         compile 'com.epam.reportportal:commons-rules:5.0.0-BETA-13'
-        compile 'com.epam.reportportal:commons-dao:5.0.0-BETA-13'
+        compile 'com.epam.reportportal:commons-dao:5.0.0-RC-1'
     } else {
-        compile 'com.github.reportportal:commons-dao:de15957'
-        compile 'com.github.reportportal:commons-model:b629245'
+        compile 'com.github.reportportal:commons-dao:5.0.0-RC-1'
+        compile 'com.github.reportportal:commons-model:5.0.0-RC-1'
         compile('com.github.reportportal:commons-rules:5.0.0-BETA-6')
     }
 
