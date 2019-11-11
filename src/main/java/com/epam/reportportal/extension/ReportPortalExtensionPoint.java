@@ -2,7 +2,7 @@ package com.epam.reportportal.extension;
 
 import org.pf4j.ExtensionPoint;
 
-import java.util.List;
+import java.util.Map;
 
 /**
  * @author <a href="mailto:pavel_bortnik@epam.com">Pavel Bortnik</a>
@@ -10,11 +10,17 @@ import java.util.List;
 public interface ReportPortalExtensionPoint extends ExtensionPoint {
 
 	/**
-	 * Return available plugin commands
-	 *
-	 * @return List of command names
+	 * Should be provided in the {@link #getPluginParams()} method
+	 * as a key parameter key. Value is supported commands by plugin
 	 */
-	List<String> getCommandNames();
+	String ALLOWED_COMMANDS = "allowedCommands";
+
+	/**
+	 * Return available plugin parameters
+	 *
+	 * @return Map of plugin params
+	 */
+	Map<String, ?> getPluginParams();
 
 	/**
 	 * Returns concrete plugin command
