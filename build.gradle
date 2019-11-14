@@ -1,5 +1,5 @@
 plugins {
-    id "io.spring.dependency-management" version "1.0.7.RELEASE"
+    id 'io.spring.dependency-management' version '1.0.8.RELEASE'
     id 'java'
     id 'net.researchgate.release' version '2.8.0'
     id "com.jfrog.bintray" version "1.8.4"
@@ -7,10 +7,8 @@ plugins {
 
 description = 'EPAM Report portal. Plugin extension APIs'
 
-
 apply from: 'https://raw.githubusercontent.com/reportportal/gradle-scripts/master/release-commons.gradle'
 apply from: 'build-quality.gradle'
-
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -25,10 +23,9 @@ repositories {
     maven { url "https://jitpack.io" }
 }
 
-
 dependencyManagement {
     imports {
-        mavenBom "org.springframework.boot:spring-boot-dependencies:2.1.5.RELEASE"
+        mavenBom "org.springframework.boot:spring-boot-dependencies:2.2.0.RELEASE"
     }
 }
 
@@ -42,13 +39,11 @@ dependencies {
         compile 'com.epam.reportportal:commons-rules:5.0.0-BETA-6'
         compile 'com.epam.reportportal:commons-dao:5.0.0-RC-1'
     } else {
-        compile 'com.github.reportportal:commons-dao:5.0.0-RC-1'
-        compile 'com.github.reportportal:commons-model:5.0.0-RC-1'
-        compile('com.github.reportportal:commons-rules:5.0.0-BETA-6')
+        compile 'com.github.reportportal:commons-dao:523ba3f'
+        compile 'com.github.reportportal:commons-model:9840721'
+        compile 'com.github.reportportal:commons-rules:5.0.0-BETA-6'
     }
-
     compile 'org.pf4j:pf4j:2.4.0'
-//    compile group: 'com.rallydev.rest', name: 'rally-rest-api', version: '2.2.1'
     
     testCompile 'junit:junit'
     testCompile 'org.springframework:spring-test'
