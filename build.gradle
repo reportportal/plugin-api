@@ -39,8 +39,8 @@ dependencies {
         compile 'com.epam.reportportal:commons-rules:5.0.0-BETA-6'
         compile 'com.epam.reportportal:commons-dao:5.0.0-RC-1'
     } else {
-        compile 'com.github.reportportal:commons-dao:523ba3f'
-        compile 'com.github.reportportal:commons-model:9840721'
+        compile 'com.github.reportportal:commons-dao:32762b0'
+        compile 'com.github.reportportal:commons-model:b6fdfaf'
         compile 'com.github.reportportal:commons-rules:5.0.0-BETA-6'
     }
     compile 'org.pf4j:pf4j:2.4.0'
