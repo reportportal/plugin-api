@@ -21,21 +21,26 @@ repositories {
     maven { url "https://jitpack.io" }
 }
 
-dependencyManagement {
-    imports {
-        mavenBom "org.springframework.boot:spring-boot-dependencies:2.2.0.RELEASE"
-    }
-}
-
 project.ext {
     releaseMode = project.hasProperty("releaseMode")
 }
 
+dependencyManagement {
+    imports {
+        if (releaseMode) {
+            mavenBom "com.epam.reportportal:commons-bom:5.0.0-RC-5"
+        } else {
+            mavenBom "com.github.reportportal:commons-bom:4b7ed8a"
+        }
+    }
+}
+
+
 dependencies {
     if (releaseMode) {
-        compile 'com.epam.reportportal:commons-model:5.0.0-RC-5'
-        compile 'com.epam.reportportal:commons-rules:5.0.0-BETA-6'
-        compile 'com.epam.reportportal:commons-dao:5.0.0-RC-5'
+        compile 'com.epam.reportportal:commons-model'
+        compile 'com.epam.reportportal:commons-rules'
+        compile 'com.epam.reportportal:commons-dao'
     } else {
         compile 'com.github.reportportal:commons-dao:5.0.0-RC-5'
         compile 'com.github.reportportal:commons-model:5.0.0-RC-5'
@@ -44,8 +49,6 @@ dependencies {
     compile 'org.pf4j:pf4j:2.4.0'
     
     testCompile 'junit:junit'
-    testCompile 'org.springframework:spring-test'
-
 }
 
 afterReleaseBuild.dependsOn bintrayUpload
