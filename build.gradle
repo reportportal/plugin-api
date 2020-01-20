@@ -5,8 +5,8 @@ plugins {
 
 description = 'EPAM Report portal. Plugin extension APIs'
 
-apply from: 'https://raw.githubusercontent.com/reportportal/gradle-scripts/master/release-commons.gradle'
-apply from: 'https://raw.githubusercontent.com/reportportal/gradle-scripts/master/build-quality.gradle'
+apply from: 'https://raw.githubusercontent.com/reportportal/gradle-scripts/5.0.0/release-commons.gradle'
+apply from: 'https://raw.githubusercontent.com/reportportal/gradle-scripts/5.0.0/build-quality.gradle'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -15,23 +15,18 @@ wrapper {
     gradleVersion = '5.4.1'
 }
 
-repositories {
-    mavenCentral()
-    maven { url "http://dl.bintray.com/epam/reportportal" }
-    maven { url "https://jitpack.io" }
-}
-
 project.ext {
     releaseMode = project.hasProperty("releaseMode")
 }
 
+repositories {
+    mavenCentral()
+    releaseMode ? maven { url "http://dl.bintray.com/epam/reportportal" } : maven { url 'https://jitpack.io' }
+}
+
 dependencyManagement {
     imports {
-        if (releaseMode) {
-            mavenBom "com.epam.reportportal:commons-bom:5.0.0-RC-5"
-        } else {
-            mavenBom "com.github.reportportal:commons-bom:4b7ed8a"
-        }
+        mavenBom(releaseMode ? 'com.epam.reportportal:commons-bom:5.0.0' : 'com.github.reportportal:commons-bom:4b7ed8a')
     }
 }
 
@@ -47,7 +42,7 @@ dependencies {
         compile 'com.github.reportportal:commons-rules:5.0.0-BETA-6'
     }
     compile 'org.pf4j:pf4j:2.4.0'
-    
+
     testCompile 'junit:junit'
 }
 
