@@ -5,8 +5,8 @@ plugins {
 
 description = 'EPAM Report portal. Plugin extension APIs'
 
-apply from: 'https://raw.githubusercontent.com/reportportal/gradle-scripts/5.0.0/release-commons.gradle'
-apply from: 'https://raw.githubusercontent.com/reportportal/gradle-scripts/5.0.0/build-quality.gradle'
+apply from: 'https://raw.githubusercontent.com/reportportal/gradle-scripts/develop/release-commons.gradle'
+apply from: 'https://raw.githubusercontent.com/reportportal/gradle-scripts/develop/build-quality.gradle'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -26,7 +26,7 @@ repositories {
 
 dependencyManagement {
     imports {
-        mavenBom(releaseMode ? 'com.epam.reportportal:commons-bom:5.0.0' : 'com.github.reportportal:commons-bom:4b7ed8a')
+        mavenBom(releaseMode ? 'com.epam.reportportal:commons-bom:5.0.0' : 'com.github.reportportal:commons-bom:7affe20')
     }
 }
 
@@ -37,9 +37,9 @@ dependencies {
         compile 'com.epam.reportportal:commons-rules'
         compile 'com.epam.reportportal:commons-dao'
     } else {
-        compile 'com.github.reportportal:commons-dao:5.0.0-RC-5'
-        compile 'com.github.reportportal:commons-model:5.0.0-RC-5'
-        compile 'com.github.reportportal:commons-rules:5.0.0-BETA-6'
+        compile 'com.github.reportportal:commons-dao:f056ef5'
+        compile 'com.github.reportportal:commons-model:aad6245'
+        compile 'com.github.reportportal:commons-rules:0fd2060'
     }
     compile 'org.pf4j:pf4j:2.4.0'
 
