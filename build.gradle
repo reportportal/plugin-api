@@ -3,19 +3,15 @@ plugins {
     id 'java'
 }
 
-apply from: 'https://raw.githubusercontent.com/reportportal/gradle-scripts/5.1.0-RC/release-commons.gradle'
-apply from: 'https://raw.githubusercontent.com/reportportal/gradle-scripts/5.1.0-RC/build-quality.gradle'
+project.ext.releaseMode = project.hasProperty("releaseMode")
+def branch = releaseMode ? '5.1.0-RC' : 'develop'
+
+apply from: "https://raw.githubusercontent.com/reportportal/gradle-scripts/$branch/release-commons.gradle"
+apply from: "https://raw.githubusercontent.com/reportportal/gradle-scripts/$branch/build-quality.gradle"
 
 sourceCompatibility = JavaVersion.VERSION_11
 targetCompatibility = JavaVersion.VERSION_11
-
-wrapper {
-    gradleVersion = '6.0'
-}
-
-project.ext {
-    releaseMode = project.hasProperty("releaseMode")
-}
+wrapper.gradleVersion('6.0')
 
 repositories {
     mavenCentral()
@@ -28,14 +24,13 @@ dependencyManagement {
     }
 }
 
-
 dependencies {
     if (releaseMode) {
         compile 'com.epam.reportportal:commons-model'
         compile 'com.epam.reportportal:commons-rules'
         compile 'com.epam.reportportal:commons-dao'
     } else {
-        compile 'com.github.reportportal:commons-dao:bb47d1e'
+        compile 'com.github.reportportal:commons-dao:6c9c869'
         compile 'com.github.reportportal:commons-model:a225c14'
         compile 'com.github.reportportal:commons-rules:2fe7a4b'
     }
