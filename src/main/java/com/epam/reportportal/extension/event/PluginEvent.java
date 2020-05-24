@@ -18,20 +18,41 @@ package com.epam.reportportal.extension.event;
 
 import org.springframework.context.ApplicationEvent;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author <a href="mailto:ivan_budayeu@epam.com">Ivan Budayeu</a>
  */
-public class PluginLoadedEvent extends ApplicationEvent {
+public class PluginEvent extends ApplicationEvent {
 
 	private final String pluginId;
+	private final String type;
+	private final Map<String, Object> params;
 
-	public PluginLoadedEvent(String pluginId) {
+	public PluginEvent(String pluginId, String type) {
 		super(pluginId);
 		this.pluginId = pluginId;
+		this.type = type;
+		this.params = new HashMap<>();
+	}
+
+	public PluginEvent(String pluginId, String type, Map<String, Object> params) {
+		super(pluginId);
+		this.pluginId = pluginId;
+		this.type = type;
+		this.params = params;
 	}
 
 	public String getPluginId() {
 		return pluginId;
 	}
 
+	public String getType() {
+		return type;
+	}
+
+	public Map<String, Object> getParams() {
+		return params;
+	}
 }
