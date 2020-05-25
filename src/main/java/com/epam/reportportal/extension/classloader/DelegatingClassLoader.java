@@ -16,10 +16,14 @@
 
 package com.epam.reportportal.extension.classloader;
 
+import com.epam.ta.reportportal.commons.validation.BusinessRule;
+import com.epam.ta.reportportal.ws.model.ErrorType;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+
+import static com.epam.ta.reportportal.commons.Predicates.equalTo;
 
 /**
  * @author <a href="mailto:ivan_budayeu@epam.com">Ivan Budayeu</a>
@@ -27,34 +31,36 @@ import java.util.Map;
 @Service
 public class DelegatingClassLoader extends ClassLoader {
 
+	private static final String APPLICATION_CLASS_LOADER = "applicationClassLoader";
+
 	private final Map<String, ClassLoader> delegates;
 
 	public DelegatingClassLoader() {
-		this.delegates = new HashMap<>();
+		this.delegates = new LinkedHashMap<>();
+		this.delegates.put(APPLICATION_CLASS_LOADER, this.getClass().getClassLoader());
 	}
 
 	@Override
 	public Class<?> loadClass(String name) throws ClassNotFoundException {
-		try {
-			return super.loadClass(name);
-		} catch (ClassNotFoundException exc) {
-			for (ClassLoader classLoader : delegates.values()) {
-				try {
-					return classLoader.loadClass(name);
-				} catch (ClassNotFoundException e) {
-					//let another class loader try
-				}
+		for (ClassLoader classLoader : delegates.values()) {
+			try {
+				return classLoader.loadClass(name);
+			} catch (ClassNotFoundException e) {
+				//let another class loader try
 			}
-			throw exc;
 		}
-
+		throw new ClassNotFoundException(name);
 	}
 
 	public void addLoader(String key, ClassLoader classLoader) {
+		BusinessRule.expect(key.equals(APPLICATION_CLASS_LOADER), equalTo(false))
+				.verify(ErrorType.PLUGIN_UPLOAD_ERROR, APPLICATION_CLASS_LOADER + " key is reserved");
 		delegates.put(key, classLoader);
 	}
 
 	public void removeLoader(String key) {
+		BusinessRule.expect(key.equals(APPLICATION_CLASS_LOADER), equalTo(false))
+				.verify(ErrorType.PLUGIN_UPLOAD_ERROR, APPLICATION_CLASS_LOADER + " key is reserved");
 		delegates.remove(key);
 	}
 }
