@@ -16,31 +16,12 @@
 
 package com.epam.reportportal.extension.event;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * @author <a href="mailto:ivan_budayeu@epam.com">Ivan Budayeu</a>
  */
-public class PluginEvent extends EntityEvent<String, String> {
+public class ProjectEvent extends EntityEvent<Long, String> {
 
-	private final Map<String, Object> params;
-
-	public PluginEvent(String pluginId, String type) {
-		super(pluginId, type);
-		this.params = new HashMap<>();
-	}
-
-	public PluginEvent(String pluginId, String type, Map<String, Object> params) {
-		super(pluginId, type);
-		this.params = params;
-	}
-
-	public String getPluginId() {
-		return getId();
-	}
-
-	public Map<String, Object> getParams() {
-		return params;
+	public ProjectEvent(Long id, String type) {
+		super(id, type);
 	}
 }
