@@ -17,13 +17,15 @@
 package com.epam.reportportal.extension.event;
 
 import org.springframework.context.ApplicationEvent;
+import org.springframework.core.ResolvableType;
+import org.springframework.core.ResolvableTypeProvider;
 
 import java.util.Collection;
 
 /**
  * @author <a href="mailto:ivan_budayeu@epam.com">Ivan Budayeu</a>
  */
-public class EntityCollectionEvent<T, E> extends ApplicationEvent {
+public class EntityCollectionEvent<T, E> extends ApplicationEvent implements ResolvableTypeProvider {
 
 	private final T type;
 	private final Collection<E> entities;
@@ -40,5 +42,21 @@ public class EntityCollectionEvent<T, E> extends ApplicationEvent {
 
 	public Collection<E> getEntities() {
 		return entities;
+	}
+
+	@Override
+	public ResolvableType getResolvableType() {
+		return entities.iterator().hasNext() ?
+				ResolvableType.forClassWithGenerics(getClass(),
+						ResolvableType.forInstance(this.type),
+						ResolvableType.forClassWithGenerics(this.entities.getClass(),
+								ResolvableType.forInstance(entities.iterator().next())
+						)
+				) :
+				ResolvableType.forClassWithGenerics(getClass(),
+						ResolvableType.forInstance(this.type),
+						ResolvableType.forInstance(this.entities)
+				);
+
 	}
 }
