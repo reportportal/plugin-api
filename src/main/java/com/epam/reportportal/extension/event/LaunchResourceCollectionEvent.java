@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 EPAM Systems
+ * Copyright 2019 EPAM Systems
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,30 +16,15 @@
 
 package com.epam.reportportal.extension.event;
 
-import org.springframework.context.ApplicationEvent;
+import com.epam.ta.reportportal.ws.model.launch.LaunchResource;
 
 import java.util.Collection;
 
 /**
  * @author <a href="mailto:ivan_budayeu@epam.com">Ivan Budayeu</a>
  */
-public abstract class EntityCollectionEvent<T, E> extends ApplicationEvent {
-
-	private final T type;
-	private final Collection<E> entities;
-
-	public EntityCollectionEvent(T type, Collection<E> entities) {
-		super(type);
-		this.type = type;
-		this.entities = entities;
+public class LaunchResourceCollectionEvent extends EntityCollectionEvent<String, LaunchResource> {
+	public LaunchResourceCollectionEvent(String type, Collection<LaunchResource> entities) {
+		super(type, entities);
 	}
-
-	public T getType() {
-		return type;
-	}
-
-	public Collection<E> getEntities() {
-		return entities;
-	}
-
 }
