@@ -33,7 +33,7 @@ dependencies {
         compile 'com.epam.reportportal:commons-dao'
     } else {
         compile 'com.github.reportportal:commons-dao:36662051'
-        compile 'com.github.reportportal:commons-model:a225c14'
+        compile 'com.github.reportportal:commons-model:34257a7'
         compile 'com.github.reportportal:commons-rules:2fe7a4b'
     }
     compile 'org.pf4j:pf4j:2.4.0'
