@@ -23,8 +23,8 @@ import java.util.Collection;
 /**
  * @author <a href="mailto:ivan_budayeu@epam.com">Ivan Budayeu</a>
  */
-public class GetLaunchResourceCollectionEvent extends EntityCollectionEvent<String, LaunchResource> {
-	public GetLaunchResourceCollectionEvent(String type, Collection<LaunchResource> entities) {
-		super(type, entities);
+public class GetLaunchResourceCollectionEvent extends EntityCollectionEvent<LaunchResource> {
+	public GetLaunchResourceCollectionEvent(Collection<LaunchResource> entities) {
+		super(entities);
 	}
 }
