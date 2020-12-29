@@ -23,19 +23,13 @@ import java.util.Collection;
 /**
  * @author <a href="mailto:ivan_budayeu@epam.com">Ivan Budayeu</a>
  */
-public abstract class EntityCollectionEvent<T, E> extends ApplicationEvent {
+public abstract class EntityCollectionEvent<E> extends ApplicationEvent {
 
-	private final T type;
 	private final Collection<E> entities;
 
-	public EntityCollectionEvent(T type, Collection<E> entities) {
-		super(type);
-		this.type = type;
+	public EntityCollectionEvent(Collection<E> entities) {
+		super(entities);
 		this.entities = entities;
-	}
-
-	public T getType() {
-		return type;
 	}
 
 	public Collection<E> getEntities() {

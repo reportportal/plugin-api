@@ -16,22 +16,11 @@
 
 package com.epam.reportportal.extension.event;
 
-import org.springframework.context.ApplicationEvent;
-
 /**
  * @author <a href="mailto:ivan_budayeu@epam.com">Ivan Budayeu</a>
  */
-public abstract class LaunchEvent<T> extends ApplicationEvent {
-
-	private final T source;
-
-	public LaunchEvent(T source) {
-		super(source);
-		this.source = source;
-	}
-
-	@Override
-	public T getSource() {
-		return source;
+public class StartLaunchEvent extends LaunchEvent<Long> {
+	public StartLaunchEvent(Long id) {
+		super(id);
 	}
 }
