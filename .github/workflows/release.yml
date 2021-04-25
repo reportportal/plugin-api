@@ -40,6 +40,5 @@ jobs:
       - name: Release with Gradle
         id: release
         run: |
-          ./gradlew releaseGithub -PreleaseMode -Pscripts.version=${{env.SCRIPTS_VERSION}} \
-          -Pbom.version=${{env.BOM_VERSION}} -Pmigrations.version=${{env.MIGRATIONS_VERSION}} \
+          ./gradlew releaseGithub -PreleaseMode -Pscripts.version=${{env.SCRIPTS_VERSION}} -Pbom.version=${{env.BOM_VERSION}} \
           -PgithubUserName=${{env.GH_USER_NAME}} -PgithubToken=${{secrets.GITHUB_TOKEN}}
