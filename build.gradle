@@ -8,7 +8,10 @@ project.ext.releaseMode = project.hasProperty("releaseMode")
 def scriptsUrl = 'https://raw.githubusercontent.com/reportportal/gradle-scripts/' +
         (releaseMode ? getProperty('scripts.version') : 'develop')
 
+project.ext.publishRepo = "https://maven.pkg.github.com/reportportal/plugin-api"
+
 apply from: scriptsUrl + '/release-commons.gradle'
+apply from: scriptsUrl + '/release-github.gradle'
 apply from: scriptsUrl + '/build-quality.gradle'
 
 sourceCompatibility = JavaVersion.VERSION_11
@@ -40,5 +43,3 @@ dependencies {
 
     testCompile 'junit:junit'
 }
-
-afterReleaseBuild.dependsOn bintrayUpload
