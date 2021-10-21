@@ -1,4 +1,4 @@
-package com.epam.reportportal.extension.auth;
+package com.epam.reportportal.extension;
 
 import com.epam.reportportal.extension.NamedPluginCommand;
 import com.epam.ta.reportportal.entity.integration.Integration;

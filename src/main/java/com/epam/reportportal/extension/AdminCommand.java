@@ -1,4 +1,4 @@
-package com.epam.reportportal.extension.auth;
+package com.epam.reportportal.extension;
 
 import com.epam.ta.reportportal.commons.ReportPortalUser;
 import com.epam.ta.reportportal.commons.validation.BusinessRule;
