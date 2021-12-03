@@ -28,7 +28,15 @@ public interface ReportPortalExtensionPoint extends ExtensionPoint {
 	 * @param commandName Command name
 	 * @return {@link PluginCommand}
 	 */
-	PluginCommand getCommandToExecute(String commandName);
+	PluginCommand getCommonCommand(String commandName);
+
+	/**
+	 * Returns concrete plugin command for existed integration
+	 *
+	 * @param commandName Command name
+	 * @return {@link IntegrationCommand}
+	 */
+	IntegrationCommand getIntegrationCommand(String commandName);
 
 	default IntegrationGroupEnum getIntegrationGroup() {
 		return IntegrationGroupEnum.OTHER;

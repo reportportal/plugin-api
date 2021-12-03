@@ -1,6 +1,5 @@
 package com.epam.reportportal.extension;
 
-import com.epam.reportportal.extension.NamedPluginCommand;
 import com.epam.ta.reportportal.entity.integration.Integration;
 
 import java.util.Map;
@@ -8,7 +7,7 @@ import java.util.Map;
 /**
  * @author <a href="mailto:ivan_budayeu@epam.com">Ivan Budayeu</a>
  */
-public abstract class AbstractRoleBasedCommand<T> implements NamedPluginCommand<T> {
+public abstract class AbstractRoleBasedCommand<T> implements IntegrationCommand<T> {
 
 	protected abstract void validateRole(Map<String, Object> params);
 
