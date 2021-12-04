@@ -7,7 +7,7 @@ import java.util.Map;
 /**
  * @author <a href="mailto:ivan_budayeu@epam.com">Ivan Budayeu</a>
  */
-public abstract class AbstractRoleBasedCommand<T> implements IntegrationCommand<T> {
+public abstract class AbstractRoleBasedCommand<T> implements PluginCommand<T> {
 
 	protected abstract void validateRole(Map<String, Object> params);
 
