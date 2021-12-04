@@ -7,7 +7,7 @@ import java.util.Map;
 /**
  * @author <a href="mailto:pavel_bortnik@epam.com">Pavel Bortnik</a>
  */
-public interface PluginCommand<T> {
+public interface PluginCommand<T> extends NamedPluginCommand {
 
 	/**
 	 * Executes plugin command for existed integration
