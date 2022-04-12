@@ -16,6 +16,12 @@ public interface ReportPortalExtensionPoint extends ExtensionPoint {
 	String ALLOWED_COMMANDS = "allowedCommands";
 
 	/**
+	 * Should be provided in the {@link #getPluginParams()} method
+	 * as a key parameter key. Value is supported commands by plugin
+	 */
+	String COMMON_COMMANDS = "commonCommands";
+
+	/**
 	 * Return available plugin parameters
 	 *
 	 * @return Map of plugin params
@@ -26,9 +32,17 @@ public interface ReportPortalExtensionPoint extends ExtensionPoint {
 	 * Returns concrete plugin command
 	 *
 	 * @param commandName Command name
+	 * @return {@link CommonPluginCommand}
+	 */
+	CommonPluginCommand getCommonCommand(String commandName);
+
+	/**
+	 * Returns concrete plugin command for existed integration
+	 *
+	 * @param commandName Command name
 	 * @return {@link PluginCommand}
 	 */
-	PluginCommand getCommandToExecute(String commandName);
+	PluginCommand getIntegrationCommand(String commandName);
 
 	default IntegrationGroupEnum getIntegrationGroup() {
 		return IntegrationGroupEnum.OTHER;
