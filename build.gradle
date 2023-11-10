@@ -50,7 +50,7 @@ dependencies {
         compile 'com.epam.reportportal:commons-dao'
     } else {
         compile 'com.github.reportportal:commons-dao:90f815a'
-        compile 'com.github.reportportal:commons-model:9ec180b'
+        compile 'com.github.reportportal:commons-model:bf40974'
         compile 'com.github.reportportal:commons-rules:e859db2'
     }
     compile 'org.pf4j:pf4j:2.4.0'
