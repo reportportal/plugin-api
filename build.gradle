@@ -22,17 +22,8 @@ wrapper.gradleVersion('6.0')
 
 repositories {
     mavenCentral { url "https://repo1.maven.org/maven2" }
-    if (releaseMode) {
-        dependencyRepos.forEach { path ->
-            maven {
-                setUrl("https://maven.pkg.github.com/reportportal/${path}")
-                credentials {
-                    username = findProperty("githubUserName")
-                    password = findProperty("githubToken")
-                }
-            }
-        }
-    } else {
+
+    if (!releaseMode) {
         maven { url 'https://jitpack.io' }
     }
 }
@@ -49,9 +40,9 @@ dependencies {
         compile 'com.epam.reportportal:commons-rules'
         compile 'com.epam.reportportal:commons-dao'
     } else {
-        compile 'com.github.reportportal:commons-dao:59bed64'
-        compile 'com.github.reportportal:commons-model:e8ca9fb'
-        compile 'com.github.reportportal:commons-rules:2fe7a4b'
+        compile 'com.github.reportportal:commons-dao:126ee2e'
+        compile 'com.github.reportportal:commons-model:83f012f'
+        compile 'com.github.reportportal:commons-rules:01ec4d17'
     }
     compile 'org.pf4j:pf4j:2.4.0'
 

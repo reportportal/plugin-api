@@ -28,7 +28,10 @@ import java.util.Optional;
  * Generic interface to access third-party bug tracking systems
  *
  * @author Andrei Varabyeu
+ * @deprecated Use command based approach.
  */
+
+@Deprecated
 public interface BtsExtension extends ExtensionPoint {
 
 	/**
