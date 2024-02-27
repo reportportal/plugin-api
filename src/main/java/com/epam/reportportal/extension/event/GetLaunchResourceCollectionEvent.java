@@ -16,15 +16,15 @@
 
 package com.epam.reportportal.extension.event;
 
-import com.epam.ta.reportportal.ws.model.launch.LaunchResource;
-
+import com.epam.ta.reportportal.ws.reporting.LaunchResource;
 import java.util.Collection;
 
 /**
  * @author <a href="mailto:ivan_budayeu@epam.com">Ivan Budayeu</a>
  */
 public class GetLaunchResourceCollectionEvent extends EntityCollectionEvent<LaunchResource> {
-	public GetLaunchResourceCollectionEvent(Collection<LaunchResource> entities) {
-		super(entities);
-	}
+
+  public GetLaunchResourceCollectionEvent(Collection<LaunchResource> entities) {
+    super(entities);
+  }
 }

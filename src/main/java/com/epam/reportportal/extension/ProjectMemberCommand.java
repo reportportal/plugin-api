@@ -6,7 +6,7 @@ import com.epam.ta.reportportal.commons.validation.Suppliers;
 import com.epam.ta.reportportal.dao.ProjectRepository;
 import com.epam.ta.reportportal.entity.project.Project;
 import com.epam.ta.reportportal.exception.ReportPortalException;
-import com.epam.ta.reportportal.ws.model.ErrorType;
+import com.epam.ta.reportportal.ws.reporting.ErrorType;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.Map;

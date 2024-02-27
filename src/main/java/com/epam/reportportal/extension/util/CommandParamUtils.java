@@ -17,8 +17,7 @@ package com.epam.reportportal.extension.util;
 
 import com.epam.ta.reportportal.commons.validation.Suppliers;
 import com.epam.ta.reportportal.exception.ReportPortalException;
-import com.epam.ta.reportportal.ws.model.ErrorType;
-
+import com.epam.ta.reportportal.ws.reporting.ErrorType;
 import javax.validation.ConstraintViolation;
 import javax.validation.Path;
 import java.util.Iterator;
