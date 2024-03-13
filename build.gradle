@@ -30,7 +30,7 @@ repositories {
 
 dependencyManagement {
     imports {
-        mavenBom(releaseMode ? 'com.epam.reportportal:commons-bom:' + getProperty('bom.version') : 'com.github.reportportal:commons-bom:7affe20')
+        mavenBom(releaseMode ? 'com.epam.reportportal:commons-bom:5.10.0' : 'com.epam.reportportal:commons-bom:5.10.0')
     }
 }
 
@@ -40,9 +40,10 @@ dependencies {
         compile 'com.epam.reportportal:commons-rules'
         compile 'com.epam.reportportal:commons-dao'
     } else {
-        compile 'com.github.reportportal:commons-dao:126ee2e'
-        compile 'com.github.reportportal:commons-model:83f012f'
-        compile 'com.github.reportportal:commons-rules:01ec4d17'
+        compile 'com.github.reportportal:commons-dao:d0894a1'
+        compile 'com.github.reportportal:commons-model:f466951'
+        compile 'com.github.reportportal:commons-rules:1f6bfed'
+        compile 'com.github.reportportal:commons-reporting:12c31b1'
     }
     compile 'org.pf4j:pf4j:2.4.0'
 

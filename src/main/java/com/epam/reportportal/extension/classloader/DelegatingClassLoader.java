@@ -17,7 +17,7 @@
 package com.epam.reportportal.extension.classloader;
 
 import com.epam.ta.reportportal.commons.validation.BusinessRule;
-import com.epam.ta.reportportal.ws.model.ErrorType;
+import com.epam.ta.reportportal.ws.reporting.ErrorType;
 import org.springframework.stereotype.Service;
 
 import java.util.LinkedHashMap;
