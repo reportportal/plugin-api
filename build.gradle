@@ -40,10 +40,10 @@ dependencies {
         compile 'com.epam.reportportal:commons-rules'
         compile 'com.epam.reportportal:commons-dao'
     } else {
-        compile 'com.github.reportportal:commons-dao:f9fb202'
-        compile 'com.github.reportportal:commons-model:4d97653'
+        compile 'com.github.reportportal:commons-dao:3991beb'
+        compile 'com.github.reportportal:commons-model:696bfaf'
         compile 'com.github.reportportal:commons-rules:1f6bfed'
-        compile 'com.github.reportportal:commons-reporting:55bb424'
+        compile 'com.github.reportportal:commons-reporting:c0f07a9'
     }
     compile 'org.pf4j:pf4j:2.4.0'
 
