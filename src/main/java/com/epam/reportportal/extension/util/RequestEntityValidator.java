@@ -15,8 +15,8 @@
  */
 package com.epam.reportportal.extension.util;
 
-import com.epam.ta.reportportal.exception.ReportPortalException;
 
+import com.epam.reportportal.rules.exception.ReportPortalException;
 import com.epam.ta.reportportal.ws.reporting.ErrorType;
 import javax.validation.Validation;
 import javax.validation.Validator;
