@@ -36,13 +36,11 @@ dependencyManagement {
 
 dependencies {
     if (releaseMode) {
-        compile 'com.epam.reportportal:commons-model'
-        compile 'com.epam.reportportal:commons-rules'
+        compile 'com.epam.reportportal:commons'
         compile 'com.epam.reportportal:commons-dao'
     } else {
         implementation 'com.github.reportportal:commons-dao:f2bc116'
         implementation 'com.github.reportportal:commons:e647ea7'
-        implementation 'com.github.reportportal:commons-reporting:12c31b1'
     }
     compile 'org.pf4j:pf4j:2.4.0'
 
