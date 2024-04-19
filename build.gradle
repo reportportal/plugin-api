@@ -40,7 +40,7 @@ dependencies {
         compile 'com.epam.reportportal:commons'
         compile 'com.epam.reportportal:commons-dao'
     } else {
-        implementation 'com.github.reportportal:commons-dao:0703b75'
+        implementation 'com.github.reportportal:commons-dao:073aa934a5'
         api 'com.github.reportportal:commons-reporting:d99e842'
         api 'com.github.reportportal:commons:d7f9bec'
     }
