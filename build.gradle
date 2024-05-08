@@ -40,9 +40,8 @@ dependencies {
         compile 'com.epam.reportportal:commons'
         compile 'com.epam.reportportal:commons-dao'
     } else {
-        implementation 'com.github.reportportal:commons-dao:073aa934a5'
-        api 'com.github.reportportal:commons-reporting:d99e842'
-        api 'com.github.reportportal:commons:d7f9bec'
+        implementation 'com.github.reportportal:commons-dao:67b6717a11'
+        api 'com.github.reportportal:commons:67cbfaea24'
     }
     compile 'org.pf4j:pf4j:3.10.0'
 
