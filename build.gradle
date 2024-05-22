@@ -43,7 +43,8 @@ dependencies {
         implementation 'com.github.reportportal:commons-dao:67b6717a11'
         api 'com.github.reportportal:commons:67cbfaea24'
     }
-    compile 'org.pf4j:pf4j:3.10.0'
+    api 'org.pf4j:pf4j:3.10.0'
+    api 'org.pf4j:pf4j-update:2.3.0'
 
     testCompile 'junit:junit'
 }
