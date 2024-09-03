@@ -15,9 +15,9 @@
  */
 package com.epam.reportportal.extension.util;
 
-import com.epam.ta.reportportal.exception.ReportPortalException;
-import com.epam.ta.reportportal.ws.model.ErrorType;
 
+import com.epam.reportportal.rules.exception.ReportPortalException;
+import com.epam.reportportal.rules.exception.ErrorType;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import java.util.List;
@@ -42,7 +42,8 @@ public class RequestEntityValidator {
 				.map(it -> it.getPropertyPath() + " " + it.getMessage())
 				.collect(Collectors.toList());
 		if (!errors.isEmpty()) {
-			throw new ReportPortalException(ErrorType.BAD_REQUEST_ERROR, String.join(VALIDATION_EXCEPTION_DELIMITER, errors));
+			throw new ReportPortalException(
+					ErrorType.BAD_REQUEST_ERROR, String.join(VALIDATION_EXCEPTION_DELIMITER, errors));
 		}
 	}
 }

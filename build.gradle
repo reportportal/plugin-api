@@ -1,6 +1,7 @@
 plugins {
     id 'io.spring.dependency-management' version '1.0.8.RELEASE'
     id 'java'
+    id 'java-library'
 }
 
 project.ext {
@@ -30,19 +31,17 @@ repositories {
 
 dependencyManagement {
     imports {
-        mavenBom(releaseMode ? 'com.epam.reportportal:commons-bom:' + getProperty('bom.version') : 'com.github.reportportal:commons-bom:b929af1e08')
+        mavenBom(releaseMode ? 'com.epam.reportportal:commons-bom:5.12.1' : 'com.epam.reportportal:commons-bom:5.12.1')
     }
 }
 
 dependencies {
     if (releaseMode) {
-        compile 'com.epam.reportportal:commons-model'
-        compile 'com.epam.reportportal:commons-rules'
-        compile 'com.epam.reportportal:commons-dao'
+        implementation 'com.epam.reportportal:commons-dao'
+        api 'com.epam.reportportal:commons'
     } else {
-        compile 'com.github.reportportal:commons-dao:4d7eaa4841'
-        compile 'com.github.reportportal:commons-model:83f012f'
-        compile 'com.epam.reportportal:commons-rules'
+        implementation 'com.github.reportportal:commons-dao:823f284'
+        api 'com.github.reportportal:commons:24ea814'
     }
     compile 'org.pf4j:pf4j:3.10.0'
 
