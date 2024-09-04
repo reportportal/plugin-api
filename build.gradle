@@ -41,7 +41,7 @@ dependencies {
         compile 'com.epam.reportportal:commons-dao'
     } else {
         api 'com.epam.reportportal:commons:5.12.1'
-        api 'com.epam.reportportal:commons-dao:5.12.1'
+        api 'com.github.reportportal:commons-dao:acf1ec7'
     }
     api 'org.pf4j:pf4j:3.10.0'
 
