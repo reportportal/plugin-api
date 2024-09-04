@@ -37,13 +37,16 @@ dependencyManagement {
 
 dependencies {
     if (releaseMode) {
-        implementation 'com.epam.reportportal:commons-dao'
+        api 'com.epam.reportportal:commons-dao'
         api 'com.epam.reportportal:commons'
     } else {
-        implementation 'com.github.reportportal:commons-dao:823f284'
+        api 'com.github.reportportal:commons-dao:823f284'
         api 'com.github.reportportal:commons:24ea814'
     }
-    compile 'org.pf4j:pf4j:3.10.0'
+
+    implementation 'org.hibernate:hibernate-core:5.6.15.Final'
+    api 'org.pf4j:pf4j:3.10.0'
+    api 'org.pf4j:pf4j-update:2.3.0'
 
     testCompile 'junit:junit'
 }
