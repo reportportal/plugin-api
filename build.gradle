@@ -44,6 +44,7 @@ dependencies {
         api 'com.github.reportportal:commons:develop-SNAPSHOT'
     }
     compile 'org.pf4j:pf4j:3.10.0'
+    compile 'org.pf4j:pf4j-update:2.3.0'
 
     testCompile 'junit:junit'
 }
