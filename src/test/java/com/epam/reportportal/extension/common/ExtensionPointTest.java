@@ -15,22 +15,22 @@
  */
 package com.epam.reportportal.extension.common;
 
-import org.hamcrest.CoreMatchers;
-import org.junit.Assert;
-import org.junit.Test;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class ExtensionPointTest {
 
-	@Test
-	public void findByExtensionPositive() {
-		Assert.assertThat("Incorrect find by extension",
-				ExtensionPoint.findByExtension(ExtensionPoint.BTS.getExtensionClass()).isPresent(),
-				CoreMatchers.is(true)
-		);
-	}
+  @Test
+  public void findByExtensionPositive() {
+    Assertions.assertTrue(
+        ExtensionPoint.findByExtension(ExtensionPoint.BTS.getExtensionClass()).isPresent(),
+        "Incorrect find by extension");
+  }
 
-	@Test
-	public void findByExtensionNegative() {
-		Assert.assertThat("Incorrect find by extension", ExtensionPoint.findByExtension(String.class).isPresent(), CoreMatchers.is(false));
-	}
+  @Test
+  public void findByExtensionNegative() {
+    Assertions.assertTrue(
+        ExtensionPoint.findByExtension(String.class).isPresent(), "Incorrect find by extension");
+  }
 }
