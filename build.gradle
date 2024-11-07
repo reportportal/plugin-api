@@ -25,7 +25,13 @@ repositories {
     }
 }
 
-ext['spring-boot.version'] = '3.3.4' // TODO: set spring-boot version in commons-bom
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+ext['spring-boot.version'] = "${springBootVersion}"
 
 dependencyManagement {
     imports {
@@ -38,22 +44,12 @@ dependencies {
         implementation 'com.epam.reportportal:commons'
         implementation 'com.epam.reportportal:commons-dao'
     } else {
-        implementation 'com.github.reportportal:commons-dao:653ca3f'
-        api 'com.github.reportportal:commons:develop-SNAPSHOT'
+        implementation 'com.github.reportportal:commons-dao:02062c7'
+        api 'com.github.reportportal:commons:e55b9e6'
     }
-    implementation 'com.fasterxml.jackson:jackson-bom:2.18.0'
-    implementation 'com.fasterxml.jackson.core:jackson-databind'
-
-    api 'org.hibernate.validator:hibernate-validator:6.2.5.Final'
 
     api 'org.pf4j:pf4j:3.12.1'
     api 'org.pf4j:pf4j-update:2.3.0'
 
     testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
-}
-
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(21)
-    }
 }
