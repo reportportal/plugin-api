@@ -10,6 +10,7 @@ import com.epam.ta.reportportal.commons.ReportPortalUser;
 import com.epam.ta.reportportal.dao.ProjectRepository;
 import com.epam.ta.reportportal.dao.organization.OrganizationRepositoryCustom;
 import com.epam.ta.reportportal.entity.organization.Organization;
+import com.epam.ta.reportportal.entity.organization.OrganizationRole;
 import com.epam.ta.reportportal.entity.project.Project;
 import com.epam.ta.reportportal.entity.user.UserRole;
 import java.util.Map;
@@ -52,6 +53,15 @@ public abstract class ProjectMemberCommand<T> extends AbstractRoleBasedCommand<T
     }
     Organization organization = organizationRepository.findById(project.getOrganizationId())
         .orElseThrow(() -> new ReportPortalException(ErrorType.NOT_FOUND));
+
+    OrganizationRole orgRole = ofNullable(user.getOrganizationDetails())
+        .flatMap(detailsMapping -> ofNullable(detailsMapping.get(organization.getName())))
+        .map(ReportPortalUser.OrganizationDetails::getOrgRole)
+        .orElseThrow(() -> new ReportPortalException(ErrorType.ACCESS_DENIED));
+
+    if (orgRole.sameOrHigherThan(OrganizationRole.MANAGER)) {
+      return;
+    }
 
     user.getOrganizationDetails().entrySet().stream()
         .filter(entry -> entry.getKey().equals(organization.getName()))
