@@ -7,6 +7,7 @@ import com.epam.reportportal.rules.commons.validation.Suppliers;
 import com.epam.reportportal.rules.exception.ErrorType;
 import com.epam.reportportal.rules.exception.ReportPortalException;
 import com.epam.ta.reportportal.commons.ReportPortalUser;
+import com.epam.ta.reportportal.commons.ReportPortalUser.OrganizationDetails;
 import com.epam.ta.reportportal.dao.ProjectRepository;
 import com.epam.ta.reportportal.dao.organization.OrganizationRepositoryCustom;
 import com.epam.ta.reportportal.entity.organization.Organization;
@@ -16,12 +17,17 @@ import com.epam.ta.reportportal.entity.user.UserRole;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
  * @author <a href="mailto:ivan_budayeu@epam.com">Ivan Budayeu</a>
  */
-public abstract class ProjectMemberCommand<T> extends AbstractRoleBasedCommand<T> {
+public abstract class BaseProjectMemberCommand<T> extends AbstractRoleBasedCommand<T> {
+
+  Logger log = LoggerFactory.getLogger(BaseProjectMemberCommand.class);
 
 	public static final String PROJECT_ID_PARAM = "projectId";
 
@@ -30,7 +36,7 @@ public abstract class ProjectMemberCommand<T> extends AbstractRoleBasedCommand<T
   protected final OrganizationRepositoryCustom organizationRepository;
 
 
-  protected ProjectMemberCommand(ProjectRepository projectRepository, OrganizationRepositoryCustom organizationRepository) {
+  protected BaseProjectMemberCommand(ProjectRepository projectRepository, OrganizationRepositoryCustom organizationRepository) {
 		this.projectRepository = projectRepository;
     this.organizationRepository = organizationRepository;
   }
@@ -54,6 +60,11 @@ public abstract class ProjectMemberCommand<T> extends AbstractRoleBasedCommand<T
     Organization organization = organizationRepository.findById(project.getOrganizationId())
         .orElseThrow(() -> new ReportPortalException(ErrorType.NOT_FOUND));
 
+    log.info("Organization keys (api): {}", String.join(",", user.getOrganizationDetails().keySet()));
+    log.info("Organization values(api): {}", user.getOrganizationDetails().values().stream()
+        .map(OrganizationDetails::getOrgName)
+        .collect(Collectors.joining(",")));
+
     OrganizationRole orgRole = ofNullable(user.getOrganizationDetails())
         .flatMap(detailsMapping -> ofNullable(detailsMapping.get(organization.getName())))
         .map(ReportPortalUser.OrganizationDetails::getOrgRole)
@@ -75,7 +86,7 @@ public abstract class ProjectMemberCommand<T> extends AbstractRoleBasedCommand<T
 
 	public static Long retrieveLong(Map<String, Object> params, String param) {
 		return ofNullable(params.get(param)).map(String::valueOf)
-				.map(ProjectMemberCommand::safeParseLong)
+				.map(BaseProjectMemberCommand::safeParseLong)
 				.orElseThrow(() -> new ReportPortalException(ErrorType.BAD_REQUEST_ERROR,
 						Suppliers.formattedSupplier("Parameter '{}' was not provided", param).get()
 				));

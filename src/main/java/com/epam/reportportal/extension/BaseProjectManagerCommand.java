@@ -18,9 +18,9 @@ import java.util.Map.Entry;
 /**
  * @author <a href="mailto:ivan_budayeu@epam.com">Ivan Budayeu</a>
  */
-public abstract class ProjectManagerCommand<T> extends ProjectMemberCommand<T> {
+public abstract class BaseProjectManagerCommand<T> extends BaseProjectMemberCommand<T> {
 
-	protected ProjectManagerCommand(ProjectRepository projectRepository, OrganizationRepositoryCustom organizationRepository) {
+	protected BaseProjectManagerCommand(ProjectRepository projectRepository, OrganizationRepositoryCustom organizationRepository) {
 		super(projectRepository, organizationRepository);
 	}
 
