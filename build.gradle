@@ -41,7 +41,7 @@ dependencies {
         compile 'com.epam.reportportal:commons-dao'
     } else {
         implementation 'com.github.reportportal:commons-dao:a072e00'
-        api 'com.github.reportportal:commons:feature~orgs-SNAPSHOT'
+        api 'com.github.reportportal:commons:3aaf677'
     }
     api 'org.pf4j:pf4j:3.10.0'
     api 'org.pf4j:pf4j-update:2.3.0'
