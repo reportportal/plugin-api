@@ -22,8 +22,6 @@ java {
     targetCompatibility = JavaVersion.VERSION_21
 }
 
-wrapper.gradleVersion('6.0')
-
 repositories {
     mavenCentral { url "https://repo1.maven.org/maven2" }
 
@@ -44,7 +42,7 @@ dependencies {
         api 'com.epam.reportportal:commons'
     } else {
         implementation 'com.github.reportportal:commons-dao:3505f19'
-        api 'com.github.reportportal:commons:1f9bec8'
+        api 'com.github.reportportal:commons:c6bbec1'
     }
     api 'org.pf4j:pf4j:3.10.0'
     api 'org.pf4j:pf4j-update:2.3.0'
