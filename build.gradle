@@ -1,5 +1,5 @@
 plugins {
-    id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+    id 'io.spring.dependency-management' version '1.1.6'
     id 'java'
     id 'java-library'
 }
@@ -15,11 +15,12 @@ def scriptsUrl = 'https://raw.githubusercontent.com/reportportal/gradle-scripts/
 
 apply from: scriptsUrl + '/release-commons.gradle'
 apply from: scriptsUrl + '/signing.gradle'
-apply from: scriptsUrl + '/build-quality.gradle'
+//apply from: scriptsUrl + '/build-quality.gradle'
 
-sourceCompatibility = JavaVersion.VERSION_11
-targetCompatibility = JavaVersion.VERSION_11
-wrapper.gradleVersion('6.0')
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
 
 repositories {
     mavenCentral { url "https://repo1.maven.org/maven2" }
@@ -37,14 +38,19 @@ dependencyManagement {
 
 dependencies {
     if (releaseMode) {
-        compile 'com.epam.reportportal:commons'
-        compile 'com.epam.reportportal:commons-dao'
+        implementation 'com.epam.reportportal:commons-dao'
+        api 'com.epam.reportportal:commons'
     } else {
-        implementation 'com.github.reportportal:commons-dao:develop-SNAPSHOT'
-        api 'com.github.reportportal:commons:develop-SNAPSHOT'
+        implementation 'com.github.reportportal:commons-dao:3505f19'
+        api 'com.github.reportportal:commons:c6bbec1'
     }
     api 'org.pf4j:pf4j:3.10.0'
     api 'org.pf4j:pf4j-update:2.3.0'
 
-    testCompile 'junit:junit'
+    testImplementation 'junit:junit'
+}
+
+
+wrapper {
+    gradleVersion = '8.10'
 }
