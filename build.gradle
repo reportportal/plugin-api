@@ -32,7 +32,7 @@ repositories {
 
 dependencyManagement {
     imports {
-        mavenBom(releaseMode ? 'com.epam.reportportal:commons-bom:5.11.7' : 'com.epam.reportportal:commons-bom:5.11.7')
+        mavenBom(releaseMode ? 'com.epam.reportportal:commons-bom:5.12.0' : 'com.epam.reportportal:commons-bom:5.12.0')
     }
 }
 
@@ -41,8 +41,8 @@ dependencies {
         implementation 'com.epam.reportportal:commons-dao'
         api 'com.epam.reportportal:commons'
     } else {
-        implementation 'com.github.reportportal:commons-dao:develop-SNAPSHOT'
-        api 'com.github.reportportal:commons:develop-SNAPSHOT'
+        implementation 'com.github.reportportal:commons-dao:adbb40e'
+        api 'com.github.reportportal:commons:6e23763'
     }
     api 'org.pf4j:pf4j:3.10.0'
     api 'org.pf4j:pf4j-update:2.3.0'
