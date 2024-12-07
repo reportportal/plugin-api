@@ -35,17 +35,17 @@ ext['spring-boot.version'] = "${springBootVersion}"
 
 dependencyManagement {
     imports {
-        mavenBom(releaseMode ? 'com.epam.reportportal:commons-bom:5.12.1' : 'com.epam.reportportal:commons-bom:5.12.1')
+        mavenBom(releaseMode ? 'com.epam.reportportal:commons-bom:5.12.0' : 'com.epam.reportportal:commons-bom:5.12.0')
     }
 }
 
 dependencies {
     if (releaseMode) {
-        implementation 'com.epam.reportportal:commons'
         implementation 'com.epam.reportportal:commons-dao'
+        api 'com.epam.reportportal:commons'
     } else {
-        implementation 'com.github.reportportal:commons-dao:02062c7'
-        api 'com.github.reportportal:commons:e55b9e6'
+        implementation 'com.github.reportportal:commons-dao:adbb40e'
+        api 'com.github.reportportal:commons:6e23763'
     }
 
     api 'org.pf4j:pf4j:3.12.1'
