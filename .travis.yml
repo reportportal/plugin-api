@@ -8,7 +8,7 @@ env:
 script: ./gradlew build --full-stacktrace
 
 jdk:
-  - oraclejdk11
+  - openjdk21
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock

@@ -15,12 +15,7 @@ def scriptsUrl = 'https://raw.githubusercontent.com/reportportal/gradle-scripts/
 
 apply from: scriptsUrl + '/release-commons.gradle'
 apply from: scriptsUrl + '/signing.gradle'
-//apply from: scriptsUrl + '/build-quality.gradle'
-
-java {
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
-}
+//apply from: scriptsUrl + '/build-quality.gradle' // TODO: fix gradle scripts
 
 repositories {
     mavenCentral { url "https://repo1.maven.org/maven2" }
@@ -29,6 +24,14 @@ repositories {
         maven { url 'https://jitpack.io' }
     }
 }
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+ext['spring-boot.version'] = "${springBootVersion}"
 
 dependencyManagement {
     imports {
@@ -41,16 +44,12 @@ dependencies {
         implementation 'com.epam.reportportal:commons-dao'
         api 'com.epam.reportportal:commons'
     } else {
-        implementation 'com.github.reportportal:commons-dao:adbb40e'
-        api 'com.github.reportportal:commons:6e23763'
+        implementation 'com.github.reportportal:commons-dao:1fb643b'
+        api 'com.github.reportportal:commons:bbb9a1a'
     }
-    api 'org.pf4j:pf4j:3.10.0'
+
+    api 'org.pf4j:pf4j:3.12.1'
     api 'org.pf4j:pf4j-update:2.3.0'
 
-    testImplementation 'junit:junit'
-}
-
-
-wrapper {
-    gradleVersion = '8.10'
+    testImplementation "org.junit.jupiter:junit-jupiter-api"
 }
