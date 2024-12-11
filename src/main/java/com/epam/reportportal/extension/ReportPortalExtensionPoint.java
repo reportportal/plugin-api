@@ -1,5 +1,6 @@
 package com.epam.reportportal.extension;
 
+import com.epam.ta.reportportal.commons.ReportPortalUser;
 import org.pf4j.ExtensionPoint;
 
 import java.util.Map;
@@ -46,6 +47,10 @@ public interface ReportPortalExtensionPoint extends ExtensionPoint {
 
 	default IntegrationGroupEnum getIntegrationGroup() {
 		return IntegrationGroupEnum.OTHER;
+	}
+
+	default boolean authorize(String projectName, ReportPortalUser user) {
+		return false;
 	}
 
 }
