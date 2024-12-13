@@ -16,13 +16,13 @@
 package com.epam.reportportal.extension.bugtracking;
 
 import com.epam.reportportal.extension.util.FileNameExtractor;
+import com.epam.reportportal.model.externalsystem.PostFormField;
+import com.epam.reportportal.model.externalsystem.PostTicketRQ;
 import com.epam.ta.reportportal.binary.impl.AttachmentDataStoreService;
 import com.epam.ta.reportportal.dao.LogRepository;
 import com.epam.ta.reportportal.dao.TestItemRepository;
 import com.epam.ta.reportportal.entity.log.Log;
 import com.epam.ta.reportportal.filesystem.DataEncoder;
-import com.epam.ta.reportportal.ws.model.externalsystem.PostFormField;
-import com.epam.ta.reportportal.ws.model.externalsystem.PostTicketRQ;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.Multimap;

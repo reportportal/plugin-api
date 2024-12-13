@@ -15,15 +15,14 @@
  */
 package com.epam.reportportal.extension.bugtracking;
 
+import com.epam.reportportal.model.externalsystem.PostFormField;
+import com.epam.reportportal.model.externalsystem.PostTicketRQ;
+import com.epam.reportportal.model.externalsystem.Ticket;
 import com.epam.ta.reportportal.entity.integration.Integration;
-import com.epam.ta.reportportal.ws.model.externalsystem.PostFormField;
-import com.epam.ta.reportportal.ws.model.externalsystem.PostTicketRQ;
-import com.epam.ta.reportportal.ws.model.externalsystem.Ticket;
+import java.util.Optional;
 import org.pf4j.ExtensionPoint;
 
 import java.util.List;
-import java.util.Optional;
-
 /**
  * Generic interface to access third-party bug tracking systems
  *

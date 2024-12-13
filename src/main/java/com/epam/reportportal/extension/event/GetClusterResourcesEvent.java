@@ -1,7 +1,7 @@
 package com.epam.reportportal.extension.event;
 
-import com.epam.ta.reportportal.ws.model.launch.cluster.ClusterInfoResource;
 
+import com.epam.reportportal.model.launch.cluster.ClusterInfoResource;
 import java.util.Collection;
 
 /**

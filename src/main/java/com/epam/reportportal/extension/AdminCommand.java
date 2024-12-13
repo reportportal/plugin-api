@@ -1,9 +1,9 @@
 package com.epam.reportportal.extension;
 
+import com.epam.reportportal.rules.commons.validation.BusinessRule;
+import com.epam.reportportal.rules.exception.ErrorType;
 import com.epam.ta.reportportal.commons.ReportPortalUser;
-import com.epam.ta.reportportal.commons.validation.BusinessRule;
 import com.epam.ta.reportportal.entity.user.UserRole;
-import com.epam.ta.reportportal.ws.reporting.ErrorType;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.Map;
