@@ -15,7 +15,12 @@ def scriptsUrl = 'https://raw.githubusercontent.com/reportportal/gradle-scripts/
 
 apply from: scriptsUrl + '/release-commons.gradle'
 apply from: scriptsUrl + '/signing.gradle'
-//apply from: scriptsUrl + '/build-quality.gradle' // TODO: fix gradle scripts
+//apply from: scriptsUrl + '/build-quality.gradle'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
 
 repositories {
     mavenCentral { url "https://repo1.maven.org/maven2" }
@@ -25,17 +30,9 @@ repositories {
     }
 }
 
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(21)
-    }
-}
-
-ext['spring-boot.version'] = "${springBootVersion}"
-
 dependencyManagement {
     imports {
-        mavenBom(releaseMode ? 'com.epam.reportportal:commons-bom:5.12.0' : 'com.epam.reportportal:commons-bom:5.12.0')
+        mavenBom(releaseMode ? 'com.epam.reportportal:commons-bom:5.13.0' : 'com.epam.reportportal:commons-bom:5.13.0')
     }
 }
 
@@ -44,12 +41,23 @@ dependencies {
         implementation 'com.epam.reportportal:commons-dao'
         api 'com.epam.reportportal:commons'
     } else {
-        implementation 'com.github.reportportal:commons-dao:1fb643b'
-        api 'com.github.reportportal:commons:bbb9a1a'
+        implementation 'com.github.reportportal:commons-dao:3e0d736'
+        api 'com.github.reportportal:commons:bcb72b3'
     }
 
     api 'org.pf4j:pf4j:3.12.1'
     api 'org.pf4j:pf4j-update:2.3.0'
 
+    implementation 'org.hibernate:hibernate-core:5.6.15.Final'
+
     testImplementation "org.junit.jupiter:junit-jupiter-api"
 }
+
+
+wrapper {
+    gradleVersion = '8.12'
+}
+
+tasks.preTagCommit.enabled = false
+tasks.updateVersion.enabled = false
+tasks.commitNewVersion.enabled = false
