@@ -35,6 +35,7 @@ dependencyManagement {
         mavenBom(releaseMode ? 'com.epam.reportportal:commons-bom:5.13.0' : 'com.epam.reportportal:commons-bom:5.13.0')
     }
 }
+ext['spring-boot.version'] = "${springBootVersion}"
 
 dependencies {
     if (releaseMode) {
@@ -48,7 +49,7 @@ dependencies {
     api 'org.pf4j:pf4j:3.12.1'
     api 'org.pf4j:pf4j-update:2.3.0'
 
-    implementation 'org.hibernate:hibernate-core:5.6.15.Final'
+    implementation 'org.hibernate:hibernate-core'
 
     testImplementation "org.junit.jupiter:junit-jupiter-api"
 }
