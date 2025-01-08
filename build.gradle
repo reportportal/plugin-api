@@ -5,7 +5,7 @@ plugins {
 }
 
 project.ext {
-    releaseMode = project.hasProperty("releaseMode")
+    releaseMode = project.hasProperty("releaseMode") ? project.releaseMode.toBoolean() : false
     publishRepo = "https://maven.pkg.github.com/reportportal/plugin-api"
     dependencyRepos = ["commons-model", "commons-rules", "commons-dao", "commons-bom"]
 }
