@@ -5,7 +5,7 @@ plugins {
 }
 
 project.ext {
-    releaseMode = project.hasProperty("releaseMode")
+    releaseMode = project.hasProperty("releaseMode") ? project.releaseMode.toBoolean() : false
     publishRepo = "https://maven.pkg.github.com/reportportal/plugin-api"
     dependencyRepos = ["commons-model", "commons-rules", "commons-dao", "commons-bom"]
 }
@@ -41,8 +41,8 @@ dependencies {
         implementation 'com.epam.reportportal:commons-dao'
         api 'com.epam.reportportal:commons'
     } else {
-        implementation 'com.github.reportportal:commons-dao:adbb40e'
-        api 'com.github.reportportal:commons:6e23763'
+        implementation 'com.github.reportportal:commons-dao:bb8ea46'
+        api 'com.github.reportportal:commons:3dfb9d8'
     }
     api 'org.pf4j:pf4j:3.10.0'
     api 'org.pf4j:pf4j-update:2.3.0'
