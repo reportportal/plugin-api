@@ -30,11 +30,11 @@ import static java.util.Optional.ofNullable;
  */
 public enum IntegrationTypeProperties {
 
-	FILE_ID("id"),
+	FILE_ID("fileId"),
+	FILE_NAME("fileName"),
 	RESOURCES_DIRECTORY("resources"),
 	COMMANDS("allowedCommands"),
-	VERSION("version"),
-	FILE_NAME("name");
+	VERSION("version");
 
 	private String attribute;
 
