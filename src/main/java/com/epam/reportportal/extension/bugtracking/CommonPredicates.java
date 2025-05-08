@@ -21,7 +21,7 @@ import java.util.Map;
 import java.util.function.Predicate;
 
 /**
- * Some common {@link org.apache.commons.collections.Predicate}
+ * Some common {@link Predicate}
  *
  * @author Andrei Varabyeu
  */

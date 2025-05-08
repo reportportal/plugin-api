@@ -18,7 +18,7 @@ package com.epam.reportportal.extension.common;
 
 import com.epam.ta.reportportal.entity.integration.IntegrationTypeDetails;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -30,11 +30,11 @@ import static java.util.Optional.ofNullable;
  */
 public enum IntegrationTypeProperties {
 
-	FILE_ID("id"),
+	FILE_ID("fileId"),
+	FILE_NAME("fileName"),
 	RESOURCES_DIRECTORY("resources"),
 	COMMANDS("allowedCommands"),
-	VERSION("version"),
-	FILE_NAME("name");
+	VERSION("version");
 
 	private String attribute;
 
