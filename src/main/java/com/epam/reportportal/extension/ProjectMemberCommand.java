@@ -1,19 +1,22 @@
 package com.epam.reportportal.extension;
 
+import static java.util.Optional.ofNullable;
+
 import com.epam.reportportal.rules.commons.validation.BusinessRule;
 import com.epam.reportportal.rules.commons.validation.Suppliers;
+import com.epam.reportportal.rules.exception.ErrorType;
 import com.epam.reportportal.rules.exception.ReportPortalException;
 import com.epam.ta.reportportal.commons.ReportPortalUser;
 import com.epam.ta.reportportal.dao.ProjectRepository;
+import com.epam.ta.reportportal.dao.organization.OrganizationRepositoryCustom;
+import com.epam.ta.reportportal.entity.organization.Organization;
+import com.epam.ta.reportportal.entity.organization.OrganizationRole;
 import com.epam.ta.reportportal.entity.project.Project;
-import com.epam.reportportal.rules.exception.ErrorType;
-import org.springframework.security.core.context.SecurityContextHolder;
-
+import com.epam.ta.reportportal.entity.user.UserRole;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Objects;
-import java.util.Optional;
-
-import static java.util.Optional.ofNullable;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
  * @author <a href="mailto:ivan_budayeu@epam.com">Ivan Budayeu</a>
@@ -24,10 +27,13 @@ public abstract class ProjectMemberCommand<T> extends AbstractRoleBasedCommand<T
 
 
 	protected final ProjectRepository projectRepository;
+  protected final OrganizationRepositoryCustom organizationRepository;
 
-	protected ProjectMemberCommand(ProjectRepository projectRepository) {
+
+  protected ProjectMemberCommand(ProjectRepository projectRepository, OrganizationRepositoryCustom organizationRepository) {
 		this.projectRepository = projectRepository;
-	}
+    this.organizationRepository = organizationRepository;
+  }
 
 	@Override
 	public void validateRole(Map<String, Object> params) {
@@ -42,9 +48,29 @@ public abstract class ProjectMemberCommand<T> extends AbstractRoleBasedCommand<T
 	}
 
 	protected void validatePermissions(ReportPortalUser user, Project project) {
-		BusinessRule.expect(ofNullable(user.getProjectDetails()).flatMap(detailsMapping -> ofNullable(detailsMapping.get(project.getName()))),
-				Optional::isPresent
-		).verify(ErrorType.ACCESS_DENIED);
+    if (user.getUserRole() == UserRole.ADMINISTRATOR) {
+      return;
+    }
+    Organization organization = organizationRepository.findById(project.getOrganizationId())
+        .orElseThrow(() -> new ReportPortalException(ErrorType.NOT_FOUND));
+
+    OrganizationRole orgRole = ofNullable(user.getOrganizationDetails())
+        .flatMap(detailsMapping -> ofNullable(detailsMapping.get(organization.getName())))
+        .map(ReportPortalUser.OrganizationDetails::getOrgRole)
+        .orElseThrow(() -> new ReportPortalException(ErrorType.ACCESS_DENIED));
+
+    if (orgRole.sameOrHigherThan(OrganizationRole.MANAGER)) {
+      return;
+    }
+
+    user.getOrganizationDetails().entrySet().stream()
+        .filter(entry -> entry.getKey().equals(organization.getName()))
+        .map(Entry::getValue)
+        .flatMap(orgDetails -> orgDetails.getProjectDetails().entrySet().stream())
+        .map(Entry::getValue)
+        .filter(details -> details.getProjectId().equals(project.getId()))
+        .findFirst()
+        .orElseThrow(() -> new ReportPortalException(ErrorType.ACCESS_DENIED));
 	}
 
 	public static Long retrieveLong(Map<String, Object> params, String param) {
