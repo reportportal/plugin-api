@@ -43,7 +43,7 @@ dependencies {
         api 'com.epam.reportportal:commons'
     } else {
         implementation 'com.github.reportportal:commons-dao:cc743b26'
-        api 'com.github.reportportal:commons:f8fcb2e'
+        api 'com.github.reportportal:commons:521968a5'
     }
 
     api 'org.pf4j:pf4j:3.12.1'
