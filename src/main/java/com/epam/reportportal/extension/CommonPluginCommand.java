@@ -22,6 +22,8 @@ public interface CommonPluginCommand<T> extends NamedPluginCommand {
    * @param pluginCommandRq Plugin command request object
    * @return Result
    */
-  T executeCommand(PluginCommandRQ pluginCommandRq);
+  default T executeCommand(PluginCommandRQ pluginCommandRq) {
+    return null;
+  }
 
 }
