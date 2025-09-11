@@ -16,21 +16,28 @@
 
 package com.epam.reportportal.extension;
 
-import com.epam.reportportal.api.model.PluginCommandContext;
 import com.epam.reportportal.api.model.PluginCommandRQ;
 import com.epam.ta.reportportal.entity.integration.Integration;
 
+public interface GeneratedPluginCommand<T> extends NamedPluginCommand {
 
-public abstract class AbstractContextBasedCommand<T> implements GeneratedPluginCommand<T> {
-
-  protected abstract void validateRole(PluginCommandContext commandContext);
-
-  protected abstract T invokeCommand(Integration integration, PluginCommandRQ pluginCommandRq);
-
-  @Override
-  public T executeCommand(Integration integration, PluginCommandRQ pluginCommandRq) {
-    validateRole(pluginCommandRq.getContext());
-    return invokeCommand(integration, pluginCommandRq);
+  /**
+   * Executes plugin command with provided PluginCommandRQ.
+   *
+   * @param pluginCommandRq Plugin command request object
+   * @return Result
+   */
+  default T executeCommand(PluginCommandRQ pluginCommandRq) {
+    return null;
   }
 
+  /**
+   * Executes plugin command with provided PluginCommandRQ.
+   *
+   * @param pluginCommandRq Plugin command request object
+   * @return Result
+   */
+  default T executeCommand(Integration integration, PluginCommandRQ pluginCommandRq) {
+    return null;
+  }
 }
