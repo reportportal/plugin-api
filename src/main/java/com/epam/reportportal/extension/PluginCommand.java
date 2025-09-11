@@ -16,7 +16,9 @@ public interface PluginCommand<T> extends NamedPluginCommand {
    * @param params      Plugin Command parameters
    * @return Result
    */
-  T executeCommand(Integration integration, Map<String, Object> params);
+  default T executeCommand(Integration integration, Map<String, Object> params) {
+    return null;
+  }
 
   /**
    * Executes plugin command with provided PluginCommandRQ.

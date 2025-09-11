@@ -14,7 +14,9 @@ public interface CommonPluginCommand<T> extends NamedPluginCommand {
    * @param params Plugin Command parameters
    * @return Result
    */
-  T executeCommand(Map<String, Object> params);
+  default T executeCommand(Map<String, Object> params) {
+    return null;
+  }
 
   /**
    * Executes plugin command with provided PluginCommandRQ.
