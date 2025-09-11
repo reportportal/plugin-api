@@ -1,5 +1,6 @@
 package com.epam.reportportal.extension;
 
+import com.epam.reportportal.api.model.PluginCommandRQ;
 import java.util.Map;
 
 /**
@@ -7,11 +8,20 @@ import java.util.Map;
  */
 public interface CommonPluginCommand<T> extends NamedPluginCommand {
 
-	/**
-	 * Executes plugin command without existed integration
-	 *
-	 * @param params Plugin Command parameters
-	 * @return Result
-	 */
-	T executeCommand(Map<String, Object> params);
+  /**
+   * Executes plugin command without existed integration
+   *
+   * @param params Plugin Command parameters
+   * @return Result
+   */
+  T executeCommand(Map<String, Object> params);
+
+  /**
+   * Executes plugin command with provided PluginCommandRQ.
+   *
+   * @param pluginCommandRq Plugin command request object
+   * @return Result
+   */
+  T executeCommand(PluginCommandRQ pluginCommandRq);
+
 }
