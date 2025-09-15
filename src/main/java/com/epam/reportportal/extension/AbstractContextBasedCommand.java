@@ -16,11 +16,18 @@
 
 package com.epam.reportportal.extension;
 
+import static org.springframework.data.util.Predicates.isTrue;
+
 import com.epam.reportportal.api.model.PluginCommandContext;
 import com.epam.reportportal.api.model.PluginCommandRQ;
+import com.epam.reportportal.rules.commons.validation.BusinessRule;
+import com.epam.reportportal.rules.exception.ErrorType;
+import com.epam.ta.reportportal.commons.Predicates;
 
 
 public abstract class AbstractContextBasedCommand<T> implements CommonPluginCommand<T> {
+
+  private static final String INVALID_SCOPE_PARAMETERS_ERROR_MESSAGE = "Invalid context scope parameters.";
 
   protected abstract void validateRole(PluginCommandContext commandContext);
 
@@ -28,8 +35,22 @@ public abstract class AbstractContextBasedCommand<T> implements CommonPluginComm
 
   @Override
   public T executeCommand(PluginCommandRQ pluginCommandRq) {
+    validateContextScope(pluginCommandRq.getContext());
     validateRole(pluginCommandRq.getContext());
     return invokeCommand(pluginCommandRq);
+  }
+
+  private void validateContextScope(PluginCommandContext context) {
+    switch (context.getScope()) {
+      case GLOBAL -> {
+      }
+      case ORGANIZATION -> BusinessRule.expect(context.getOrgId(), Predicates.notNull())
+          .verify(ErrorType.BAD_REQUEST_ERROR, INVALID_SCOPE_PARAMETERS_ERROR_MESSAGE);
+      case PROJECT -> BusinessRule.expect(context.getProjectId() != null && context.getOrgId() == null, isTrue())
+          .verify(ErrorType.BAD_REQUEST_ERROR, INVALID_SCOPE_PARAMETERS_ERROR_MESSAGE);
+      case null -> {
+      }
+    }
   }
 
 }
