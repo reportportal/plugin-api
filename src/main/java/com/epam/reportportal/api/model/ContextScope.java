@@ -7,12 +7,11 @@ import jakarta.annotation.Generated;
 /**
  * Scope in which a plugin command executes.
  */
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", comments = "Generator version: 7.11.0")public enum ContextScope {
-  
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", comments = "Generator version: 7.11.0")
+public enum ContextScope {
+
   GLOBAL("GLOBAL"),
-  
   ORGANIZATION("ORGANIZATION"),
-  
   PROJECT("PROJECT");
 
   private String value;
