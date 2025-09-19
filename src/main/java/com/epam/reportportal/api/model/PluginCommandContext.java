@@ -39,11 +39,11 @@ public class PluginCommandContext {
   }
 
   /**
-   * Organization identifier; required for ORGANIZATION; optional for PROJECT (if applicable). minimum: 0
+   * Organization identifier; required for ORGANIZATION; optional for PROJECT (if applicable). minimum: 1
    *
    * @return orgId
    */
-  @Min(0L)
+  @Min(1L)
   @Schema(name = "org_id", description = "Organization identifier; required for ORGANIZATION; optional for PROJECT (if applicable).", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("org_id")
   public Long getOrgId() {
@@ -60,11 +60,11 @@ public class PluginCommandContext {
   }
 
   /**
-   * Project identifier; required for PROJECT scope. minimum: 0
+   * Project identifier; required for PROJECT scope. minimum: 1
    *
    * @return projectId
    */
-  @Min(0L)
+  @Min(1L)
   @Schema(name = "project_id", description = "Project identifier; required for PROJECT scope.", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("project_id")
   public Long getProjectId() {
