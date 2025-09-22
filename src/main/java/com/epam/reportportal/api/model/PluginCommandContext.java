@@ -3,17 +3,22 @@ package com.epam.reportportal.api.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.annotation.Generated;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import java.util.Objects;
 import org.springframework.lang.Nullable;
 
-@Schema(name = "PluginCommandContext", description = "Context parameters defining where the command should be executed.  Scope can be omitted and is derived from provided identifiers:  - If `project_id` is present → scope is `PROJECT`. - Else if `org_id` is present → scope is `ORGANIZATION`. - Else → scope is `GLOBAL`.  When `scope` is explicitly provided, it is authoritative: the request MUST include only the identifiers required for that scope and MUST NOT include extra identifiers (e.g., `project_id` is not allowed for `ORGANIZATION`). For `PROJECT`, `org_id` is optional but, if provided, should match the organization of the project.")
+/**
+ * Context parameters defining where the command should be executed.  Scope is derived from provided identifiers:  - If
+ * &#x60;project_id&#x60; is present → scope is &#x60;PROJECT&#x60;. - Else if &#x60;org_id&#x60; is present → scope is
+ * &#x60;ORGANIZATION&#x60;. - Else → scope is &#x60;GLOBAL&#x60;.  The request MUST include only the identifiers
+ * required for the derived scope  and MUST NOT include extra identifiers.
+ */
+@Schema(name = "PluginCommandContext", description = "Context parameters defining where the command should be executed.  Scope is derived from provided identifiers:  - If `project_id` is present → scope is `PROJECT`. - Else if `org_id` is present → scope is `ORGANIZATION`. - Else → scope is `GLOBAL`.  The request MUST include only the identifiers required for the derived scope  and MUST NOT include extra identifiers.")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", comments = "Generator version: 7.11.0")
 public class PluginCommandContext {
 
-  private @Nullable ContextScope scope;
   private @Nullable Long orgId;
+
   private @Nullable Long projectId;
 
   public PluginCommandContext() {
@@ -23,31 +28,9 @@ public class PluginCommandContext {
   /**
    * Constructor with all args parameters
    */
-  public PluginCommandContext(@Nullable ContextScope scope, @Nullable Long orgId, @Nullable Long projectId) {
-    this.scope = scope;
+  public PluginCommandContext(@Nullable Long orgId, @Nullable Long projectId) {
     this.orgId = orgId;
     this.projectId = projectId;
-  }
-
-  public PluginCommandContext scope(ContextScope scope) {
-    this.scope = scope;
-    return this;
-  }
-
-  /**
-   * Get scope
-   *
-   * @return scope
-   */
-  @Valid
-  @Schema(name = "scope", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("scope")
-  public ContextScope getScope() {
-    return scope;
-  }
-
-  public void setScope(ContextScope scope) {
-    this.scope = scope;
   }
 
   public PluginCommandContext orgId(Long orgId) {
@@ -56,12 +39,12 @@ public class PluginCommandContext {
   }
 
   /**
-   * Resource identifier. minimum: 1
+   * Organization identifier; required for ORGANIZATION; optional for PROJECT (if applicable). minimum: 1
    *
    * @return orgId
    */
   @Min(1L)
-  @Schema(name = "org_id", description = "Resource identifier.", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "org_id", description = "Organization identifier; required for ORGANIZATION; optional for PROJECT (if applicable).", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("org_id")
   public Long getOrgId() {
     return orgId;
@@ -77,12 +60,12 @@ public class PluginCommandContext {
   }
 
   /**
-   * Resource identifier. minimum: 1
+   * Project identifier; required for PROJECT scope. minimum: 1
    *
    * @return projectId
    */
   @Min(1L)
-  @Schema(name = "project_id", description = "Resource identifier.", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "project_id", description = "Project identifier; required for PROJECT scope.", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("project_id")
   public Long getProjectId() {
     return projectId;
@@ -101,21 +84,19 @@ public class PluginCommandContext {
       return false;
     }
     PluginCommandContext pluginCommandContext = (PluginCommandContext) o;
-    return Objects.equals(this.scope, pluginCommandContext.scope) &&
-        Objects.equals(this.orgId, pluginCommandContext.orgId) &&
+    return Objects.equals(this.orgId, pluginCommandContext.orgId) &&
         Objects.equals(this.projectId, pluginCommandContext.projectId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(scope, orgId, projectId);
+    return Objects.hash(orgId, projectId);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class PluginCommandContext {\n");
-    sb.append("    scope: ").append(toIndentedString(scope)).append("\n");
     sb.append("    orgId: ").append(toIndentedString(orgId)).append("\n");
     sb.append("    projectId: ").append(toIndentedString(projectId)).append("\n");
     sb.append("}");
@@ -145,14 +126,8 @@ public class PluginCommandContext {
     }
 
     protected Builder copyOf(PluginCommandContext value) {
-      this.instance.setScope(value.scope);
       this.instance.setOrgId(value.orgId);
       this.instance.setProjectId(value.projectId);
-      return this;
-    }
-
-    public Builder scope(ContextScope scope) {
-      this.instance.scope(scope);
       return this;
     }
 
@@ -201,3 +176,4 @@ public class PluginCommandContext {
     return builder.copyOf(this);
   }
 }
+
