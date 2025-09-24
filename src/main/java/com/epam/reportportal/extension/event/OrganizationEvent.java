@@ -18,6 +18,9 @@ package com.epam.reportportal.extension.event;
 
 public class OrganizationEvent extends EntityEvent<Long, String> {
 
+  public static final String CREATE_KEY = "create";
+  public static final String UPDATE_KEY = "update";
+
   public OrganizationEvent(Long id, String type) {
     super(id, type);
   }
