@@ -42,8 +42,8 @@ dependencies {
         implementation 'com.epam.reportportal:commons-dao'
         api 'com.epam.reportportal:commons'
     } else {
-        implementation 'com.github.reportportal:commons-dao:cc743b26'
-        api 'com.github.reportportal:commons:521968a5'
+        implementation 'com.github.reportportal:commons-dao:a45973f'
+        api 'com.github.reportportal:commons:92f6300'
     }
 
     api 'org.pf4j:pf4j:3.12.1'
