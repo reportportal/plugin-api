@@ -39,11 +39,11 @@ ext['spring-boot.version'] = "${springBootVersion}"
 
 dependencies {
     if (releaseMode) {
-        implementation 'com.epam.reportportal:commons-dao'
-        api 'com.epam.reportportal:commons'
+        implementation 'com.epam.reportportal:commons-dao:5.15.0'
+        api 'com.epam.reportportal:commons:5.15.0'
     } else {
-        implementation 'com.github.reportportal:commons-dao:81313655'
-        api 'com.github.reportportal:commons:60b6f4ae'
+        implementation 'com.github.reportportal:commons-dao:c564583'
+        api 'com.github.reportportal:commons:2d72f91'
     }
 
     api 'org.pf4j:pf4j:3.13.0'
