@@ -24,10 +24,7 @@ java {
 
 repositories {
     mavenCentral { url "https://repo1.maven.org/maven2" }
-
-    if (!releaseMode) {
-        maven { url 'https://jitpack.io' }
-    }
+    maven { url 'https://jitpack.io' }
 }
 
 dependencyManagement {
@@ -38,13 +35,8 @@ dependencyManagement {
 ext['spring-boot.version'] = "${springBootVersion}"
 
 dependencies {
-    if (releaseMode) {
-        implementation 'com.epam.reportportal:commons-dao:5.15.0'
-        api 'com.epam.reportportal:commons:5.15.0'
-    } else {
-        implementation 'com.github.reportportal:commons-dao:c564583'
-        api 'com.github.reportportal:commons:2d72f91'
-    }
+    implementation 'com.github.reportportal:commons-dao:5.15.0'
+    api 'com.github.reportportal:commons:5.15.0'
 
     api 'org.pf4j:pf4j:3.13.0'
     api 'org.pf4j:pf4j-update:2.3.0'
