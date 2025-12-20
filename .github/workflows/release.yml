@@ -13,7 +13,7 @@ env:
   GH_USER_NAME: github.actor
   SCRIPTS_VERSION: 5.14.0
   BOM_VERSION: 5.14.1
-  RELEASE_VERSION: 5.14.1
+  RELEASE_VERSION: 5.15.0
 
 jobs:
   release:
