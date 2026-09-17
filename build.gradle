@@ -27,18 +27,26 @@ repositories {
     maven { url 'https://jitpack.io' }
 }
 
+ext['spring-boot.version'] = "${springBootVersion}"
+ext['jackson-bom.version'] = "${jacksonVersion}"
+ext['spring-framework.version'] = "${springFrameworkVersion}"
+ext['spring-security.version'] = "${springSecurityVersion}"
+
 dependencyManagement {
     imports {
-        mavenBom(releaseMode ? 'com.epam.reportportal:commons-bom:' + getProperty('bom.version') : 'com.epam.reportportal:commons-bom:5.14.1')
+        mavenBom(releaseMode ? 'com.epam.reportportal:commons-bom:' + getProperty('bom.version') : 'com.github.reportportal:commons-bom:5.15.2')
+        mavenBom "com.fasterxml.jackson:jackson-bom:${jacksonVersion}"
+        mavenBom "org.springframework:spring-framework-bom:${springFrameworkVersion}"
+        mavenBom "org.springframework.security:spring-security-bom:${springSecurityVersion}"
     }
 }
-ext['spring-boot.version'] = "${springBootVersion}"
 
 dependencies {
-    implementation 'com.github.reportportal:commons-dao:5.15.0'
-    api 'com.github.reportportal:commons:5.15.0'
+    // commons-dao 5.15.7 is unpublished; pin upcoming HEAD (123253b + EPMRPP-118978 security pins)
+    implementation 'com.github.reportportal:commons-dao:b56d686'
+    api 'com.github.reportportal:commons:5.15.2'
 
-    api 'org.pf4j:pf4j:3.13.0'
+    api 'org.pf4j:pf4j:3.15.0'
     api 'org.pf4j:pf4j-update:2.3.0'
 
     implementation 'org.hibernate:hibernate-core:6.6.5.Final'
