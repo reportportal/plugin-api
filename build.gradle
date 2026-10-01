@@ -42,9 +42,8 @@ dependencyManagement {
 }
 
 dependencies {
-    // commons-dao 5.15.7 is unpublished; pin upcoming HEAD (123253b + EPMRPP-118978 security pins)
-    implementation 'com.github.reportportal:commons-dao:b56d686'
-    api 'com.github.reportportal:commons:5.15.2'
+    implementation 'com.github.reportportal:commons-dao:a48bccc'
+    api 'com.github.reportportal:commons:69be9c8'
 
     api 'org.pf4j:pf4j:3.15.0'
     api 'org.pf4j:pf4j-update:2.3.0'
